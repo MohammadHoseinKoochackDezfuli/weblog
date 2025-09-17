@@ -37,7 +37,7 @@ public class SecurityConfig {
                                         .failureUrl("/login?error=true")
                                         .permitAll()
                 )
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/login", "/", "/register"
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/login", "/", "/register","/style.css","/headerMaker.js","/footerMaker.js"
                                 ,"/users/login","/error", "/cat.png")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/login", "/users/register")

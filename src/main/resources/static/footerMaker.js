@@ -1,0 +1,1 @@
+﻿document.getElementById("footer").innerHTML=`© 2025 وب لاگ | تمامی حقوق محفوظ است`;
