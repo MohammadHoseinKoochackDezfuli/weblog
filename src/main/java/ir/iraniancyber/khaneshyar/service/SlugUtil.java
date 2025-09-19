@@ -5,6 +5,6 @@ public class SlugUtil {
         return input
                 .toLowerCase()
                 .replaceAll("[^a-z0-9]+", "-")
-                .replaceAll("^-|-$", ""); // حذف - اضافی اول/آخر
+                .replaceAll("^-|-$", "");
     }
 }

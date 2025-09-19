@@ -4,27 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صفحه ثبت ‌نام</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/style.css"> <!-- استایل های خودت حفظ شدند -->
+    <style>
+        /* ============================= */
+        /* استایل های جایگزین بوت‌استر */
+        /* ============================= */
+
+        body {
+            font-family: 'Vazir', sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .register-card {
+            max-width: 420px;
+            margin: 70px auto;
+            background: #fff;
+            padding: 30px 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .register-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.18);
+        }
+
+        .register-card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0,123,255,0.5);
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            display: none;
+            align-items: center;
+            background: #dc3545;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+            min-width: 250px;
+            font-size: 14px;
+            animation: fadeIn 0.5s;
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        .toast img {
+            border-radius: 50%;
+            margin-left: 10px;
+            width: 32px;
+            height: 32px;
+            animation: shake 0.6s ease-in-out 2;
+        }
+
+        .btn-close {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            margin-right: auto;
+            cursor: pointer;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(0); }
+            25% { transform: translate(-2px, 2px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(-2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
 <header id="header"></header>
 
-<div class="toast-container position-fixed top-0 end-0 p-3">
-    <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive"
-         aria-atomic="true">
-        <div class="d-flex align-items-center">
-            <img src="/cat.png"
-                 alt="avatar"
-                 class="rounded-circle me-2"
-                 style="width:30px; height:30px; animation: shake 0.6s ease-in-out 2;">
-            <div class="toast-body" id="toastMessage">خطا رخ داده است</div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-        </div>
+<div class="toast-container">
+    <div id="errorToast" class="toast">
+        <img src="/cat.png" alt="avatar">
+        <div id="toastMessage">خطا رخ داده است</div>
+        <button type="button" class="btn-close" onclick="hideToast()">×</button>
     </div>
 </div>
-
 
 <div class="register-card">
     <h2>ثبت ‌نام</h2>
@@ -34,46 +155,54 @@
         <input type="text" class="form-control" id="nationalCode" placeholder="کد ملی">
         <input type="text" class="form-control" id="nationality" placeholder="ملیت">
         <input type="text" class="form-control" id="name" placeholder="نام">
-        <button type="submit" class="btn btn-primary w-100">ثبت ‌نام</button>
+        <button type="submit" class="btn btn-primary">ثبت ‌نام</button>
     </form>
 </div>
+
 <footer id="footer"></footer>
+
 <script>
     document.getElementById("register-form").addEventListener("submit", async function (register) {
-            register.preventDefault();
-            const userDto = {
-                username: document.getElementById("username").value,
-                password: document.getElementById("password").value,
-                nationalCode: document.getElementById("nationalCode").value,
-                nationality: document.getElementById("nationality").value,
-                name: document.getElementById("name").value
-            };
-            const response = await fetch("http://localhost:8083/users/register", {
+        register.preventDefault();
+        const userDto = {
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value,
+            nationalCode: document.getElementById("nationalCode").value,
+            nationality: document.getElementById("nationality").value,
+            name: document.getElementById("name").value
+        };
+        try {
+            const res = await fetch("http://localhost:8083/users/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-
                 },
                 body: JSON.stringify(userDto)
-            })
-                .then(async res => {
-                    if (res.status !== 200) {
-                        showErrorToast(response[0].title)
-                        return;
-                    }
-                    window.location.href = "http://localhost:8083/login";
-                })
+            });
 
+            if (res.status !== 200) {
+                const error = await res.json();
+                showErrorToast(error.title || "خطا رخ داده است");
+                return;
+            }
+            window.location.href = "http://localhost:8083/login";
+        } catch (e) {
+            showErrorToast("ارتباط برقرار نشد");
         }
-    )
+    });
 
     function showErrorToast(message) {
+        const toast = document.getElementById("errorToast");
         document.getElementById("toastMessage").textContent = message;
-        const toastElement = document.getElementById("errorToast");
-        const toast = new bootstrap.Toast(toastElement);
-        toast.show();
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 4000);
+    }
+
+    function hideToast() {
+        document.getElementById("errorToast").classList.remove("show");
     }
 </script>
+
 <script src="/headerMaker.js"></script>
 <script src="/footerMaker.js"></script>
 </body>

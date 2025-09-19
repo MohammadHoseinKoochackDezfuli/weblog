@@ -4,36 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صفحه ورود</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/style.css"> <!-- استایل خودت حفظ شد -->
     <style>
+        /* ============================= */
+        /* استایل جایگزین بوت‌استر */
+        /* ============================= */
+
+        body {
+            font-family: 'Vazir', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
 
         .login-card {
-            max-width: 400px;
+            max-width: 420px;
             margin: 100px auto;
-            padding: 40px;
+            padding: 40px 30px;
             border-radius: 20px;
-            box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
-            background-color: white;
-            height: 400px;
-
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .btn-primary {
-            background-color: #1976d2;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #1565c0;
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
         }
 
         .form-label {
             margin-bottom: 10px;
             font-weight: 500;
+            display: block;
         }
 
         .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #1976d2;
+            box-shadow: 0 0 5px rgba(25, 118, 210, 0.5);
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
             padding: 12px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #1976d2;
+            color: #fff;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #1565c0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1976d2;
+            margin-bottom: 25px;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            display: none;
+            align-items: center;
+            background: #dc3545;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+            min-width: 250px;
+            font-size: 14px;
+            animation: fadeIn 0.5s;
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        .btn-close {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            margin-left: auto;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -41,35 +131,31 @@
 <header id="header"></header>
 
 <div class="container">
-    <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive"
-             aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body" id="toastMessage">
-                    خطا رخ داده است
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-            </div>
+    <div class="toast-container">
+        <div id="errorToast" class="toast">
+            <div id="toastMessage">خطا رخ داده است</div>
+            <button type="button" class="btn-close" onclick="hideToast()">×</button>
         </div>
     </div>
 
-    <div class="login-card d-flex flex-column justify-content-center">
-        <h2 class="text-center text-primary mb-4">ورود به حساب</h2>
+    <div class="login-card">
+        <h2>ورود به حساب</h2>
         <div>
-            <div class="mb-4">
+            <div>
                 <label for="username" class="form-label">نام کاربری</label>
                 <input type="text" class="form-control" id="username" placeholder="نام کاربری خود را وارد کنید">
             </div>
-            <div class="mb-4">
+            <div>
                 <label for="password" class="form-label">رمز عبور</label>
                 <input type="password" class="form-control" id="password" placeholder="رمز عبور خود را وارد کنید">
             </div>
-            <button onclick="login();" class="btn btn-primary w-100 fs-5 py-2">ورود</button>
+            <button onclick="login();" class="btn btn-primary">ورود</button>
         </div>
     </div>
 </div>
+
 <footer id="footer"></footer>
+
 <script>
     function login() {
         let username = document.getElementById("username").value;
@@ -82,20 +168,25 @@
         })
             .then(async res => {
                 if (res.status !== 200) {
-                    showErrorToast('کاربر مورد نظر یافت نشد')
+                    showErrorToast('کاربر مورد نظر یافت نشد');
                     return;
                 }
                 window.location.replace("http://localhost:8083");
-            })
+            });
     }
 
     function showErrorToast(message) {
+        const toast = document.getElementById("errorToast");
         document.getElementById("toastMessage").textContent = message;
-        const toastElement = document.getElementById("errorToast");
-        const toast = new bootstrap.Toast(toastElement);
-        toast.show();
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 4000);
+    }
+
+    function hideToast() {
+        document.getElementById("errorToast").classList.remove("show");
     }
 </script>
+
 <script src="/headerMaker.js"></script>
 <script src="/footerMaker.js"></script>
 </body>
