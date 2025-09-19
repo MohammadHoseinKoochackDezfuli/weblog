@@ -31,15 +31,15 @@ public class UserController {
         this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping("/register")//todo call from front
+    @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody UserDto userDto) {
         User user = new User();
-        user.setName(userDto.getName());
+        user.setFullName(userDto.getFullName());
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setNationality(userDto.getNationality());
-        user.setNationalCode(userDto.getNationalCode());
-        user.setRole(Role.USER);
+        user.setEmail(userDto.getEmail());
+        user.setCreatedAt(userDto.getCreatedAt());
+        user.setRole(Role.ROLE_USER);
         customUserDetailService.save(user);
         return ResponseEntity.ok().build();
     }

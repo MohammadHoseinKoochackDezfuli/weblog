@@ -1,27 +1,36 @@
 package ir.iraniancyber.khaneshyar.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "application_users")
-public class User extends BaseEntity {
-
-    private String name;
+public class User {
+    private int id;
+    private String fullName;
     private String password;
     private String username;
-    private String nationalCode;
-    private String nationality;
+    private String email;
     private Role role;
+    private LocalDateTime createdAt;
 
-    public String getName() {
-        return name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPassword() {
@@ -40,20 +49,12 @@ public class User extends BaseEntity {
         this.username = username;
     }
 
-    public String getNationalCode() {
-        return nationalCode;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNationalCode(String nationalCode) {
-        this.nationalCode = nationalCode;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Enumerated(EnumType.STRING)
@@ -63,5 +64,13 @@ public class User extends BaseEntity {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

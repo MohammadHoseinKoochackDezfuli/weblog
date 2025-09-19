@@ -1,23 +1,29 @@
 package ir.iraniancyber.khaneshyar.dto;
 
+import ir.iraniancyber.khaneshyar.model.Role;
 import jakarta.validation.constraints.NotBlank;
+
+import java.time.LocalDateTime;
 
 public class UserDto {
 
-    //todo validate add *
 
-    private final String username;
-    private final String password;
-    private final String nationalCode;
-    private final String nationality;
-    private final String name;
+    private int id;
+    private String fullName;
+    private String password;
+    private String username;
+    private String email;
+    private Role role;
+    private LocalDateTime createdAt;
 
-    public UserDto(String username, String password, String nationalCode, String nationality, String name) {
-        this.username = username;
+    public UserDto(int id, String fullName, String password, String username, String email, Role role, LocalDateTime createdAt) {
+        this.id = id;
+        this.fullName = fullName;
         this.password = password;
-        this.nationalCode = nationalCode;
-        this.nationality = nationality;
-        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.role = role;
+        this.createdAt = createdAt;
     }
 
     @NotBlank(message = "user.username.null")
@@ -30,18 +36,28 @@ public class UserDto {
         return password;
     }
 
-    @NotBlank(message = "user.nationalCode.null")
-    public String getNationalCode() {
-        return nationalCode;
+    @NotBlank(message = "user.id.null")
+    public int getId() {
+        return id;
     }
 
-    @NotBlank(message = "user.nationality.null")
-    public String getNationality() {
-        return nationality;
+    @NotBlank(message = "user.fullName.null")
+    public String getFullName() {
+        return fullName;
     }
 
-    @NotBlank(message = "user.name.null")
-    public String getName() {
-        return name;
+    @NotBlank(message = "user.email.null")
+    public String getEmail() {
+        return email;
+    }
+
+    @NotBlank(message = "user.roll.null")
+    public Role getRole() {
+        return role;
+    }
+
+    @NotBlank(message = "user.createdAt.null")
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }
