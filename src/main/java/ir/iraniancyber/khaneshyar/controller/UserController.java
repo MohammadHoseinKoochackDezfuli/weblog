@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(allowedHeaders = "*", origins = "*")
@@ -38,8 +40,8 @@ public class UserController {
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
-        user.setCreatedAt(userDto.getCreatedAt());
-        user.setRole(Role.ROLE_USER);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setRole(Role.USER);
         customUserDetailService.save(user);
         return ResponseEntity.ok().build();
     }
@@ -56,6 +58,7 @@ public class UserController {
 
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            System.out.println("ERROR:"+e.getMessage());
             return ResponseEntity.status(401).build();
         }
     }
