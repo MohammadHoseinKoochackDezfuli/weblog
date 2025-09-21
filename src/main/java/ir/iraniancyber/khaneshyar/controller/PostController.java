@@ -29,4 +29,9 @@ public class PostController {
     {
         return postService.count();
     }
+    @GetMapping("/findTop4ByOrderByViewsDesc")
+    public List<Post> findTop4ByOrderByViewsDesc()
+    {
+        return postService.findTop4ByOrderByViewsDesc();
+    }
 }

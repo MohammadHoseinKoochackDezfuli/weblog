@@ -22,8 +22,16 @@
         </div>
         <br>
         <br>
+        <h2>دسته بندی ها</h2>
+        <div id="categories"></div>
+        <br>
+        <br>
         <h2>جدیدترین وبلاگ ها</h2>
         <div id="newWeblogs"></div>
+        <br>
+        <br>
+        <h2>پربازدیدترین وبلاگ ها</h2>
+        <div id="moreView"></div>
     </center>
 </div>
 <footer id="footer"></footer>
@@ -63,6 +71,38 @@
         }
         return text;
     }
+    function categoryMaker(res)
+    {
+        return `<div style="width: 50%;margin-left: 20px">
+                <div class="category">
+                    <h4>`+res.name+`</h4>
+                    <p>`+res.description+`</p>
+                </div>
+            </div>`;
+    }
+    function listCategoryMaker(res)
+    {
+        var text="";
+        for(var i=0;i<res.length;i++)
+        {
+            if(i%2==0)
+            {
+                text+=`
+        <div style="height: 20px;"></div>
+        <div style="display: flex;">`;
+            }
+            else
+            {
+                text+=`<div style="width: 20px;"></div>`;
+            }
+            text+=categoryMaker(res[i]);
+            if(i%2==1)
+            {
+                text+="</div>";
+            }
+        }
+        return text;
+    }
     function round(number)
     {
         var newNumber=number[0];
@@ -72,11 +112,21 @@
         }
         return newNumber;
     }
+    fetch("http://localhost:8083/categories/findAll")
+    .then(res=>res.json())
+    .then(res=>{
+        document.getElementById("categories").innerHTML=listCategoryMaker(res);
+    })
     fetch("http://localhost:8083/posts/findTop4ByOrderByCreatedAtDesc")
         .then(res=>res.json())
         .then(res=>{
             document.getElementById("newWeblogs").innerHTML=listPostMaker(res);
         })
+    fetch("http://localhost:8083/posts/findTop4ByOrderByViewsDesc")
+    .then(res=>res.json())
+    .then(res=>{
+        document.getElementById("moreView").innerHTML=listPostMaker(res);
+    })
     fetch("http://localhost:8083/posts/count")
         .then(res => res.text())
         .then(res=>{

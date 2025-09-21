@@ -1,1 +1,1 @@
-﻿document.getElementById("footer").innerHTML=`© 2025 وب لاگ | تمامی حقوق محفوظ است`;
+﻿document.getElementById("footer").innerHTML=`© 2025 وبلاگ | تمامی حقوق محفوظ است`;

@@ -41,7 +41,7 @@ public class SecurityConfig {
                                 ,"/users/login","/error", "/cat.png")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/login", "/users/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/posts/findTop4ByOrderByCreatedAtDesc","/posts/count").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/posts/findTop4ByOrderByCreatedAtDesc","/posts/findTop4ByOrderByViewsDesc","/posts/count","categories/findAll").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();

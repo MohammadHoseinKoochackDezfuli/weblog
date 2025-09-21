@@ -24,4 +24,9 @@ public class PostServiceImpl implements PostService {
     {
         return postRepository.count();
     }
+    @Override
+    public List<Post> findTop4ByOrderByViewsDesc()
+    {
+        return postRepository.findTop4ByOrderByViewsDesc();
+    }
 }
