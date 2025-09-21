@@ -38,10 +38,10 @@ public class SecurityConfig {
                                         .permitAll()
                 )
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/login", "/", "/register","/style.css","/headerMaker.js","/footerMaker.js"
-                                ,"/users/login","/error", "/cat.png")
+                                ,"/users/login","/error", "/cat.png","/post")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/login", "/users/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/posts/findTop4ByOrderByCreatedAtDesc","/posts/findTop4ByOrderByViewsDesc","/posts/count","categories/findAll").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/posts/findTop4ByOrderByCreatedAtDesc","/posts/findTop4ByOrderByViewsDesc","/posts/count","/categories/findAll","/posts/findBySlug").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();

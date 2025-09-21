@@ -2,12 +2,10 @@ package ir.iraniancyber.khaneshyar.controller;
 
 import ir.iraniancyber.khaneshyar.model.Post;
 import ir.iraniancyber.khaneshyar.service.post.PostService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/posts")
@@ -19,7 +17,11 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
-
+    @GetMapping("/findBySlug")
+    public Optional<Post> findBySlug(@RequestParam String slug)
+    {
+        return postService.findBySlug(slug);
+    }
     @GetMapping("/findTop4ByOrderByCreatedAtDesc")
     public List<Post> findTop4ByOrderByCreatedAtDesc() {
         return postService.findTop4ByOrderByCreatedAtDesc();

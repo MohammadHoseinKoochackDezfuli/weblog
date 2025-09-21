@@ -13,10 +13,10 @@ public class PageController {
         return "index";
     }
 
-    @GetMapping("/showExam")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @GetMapping("/post")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public String showExam() {
-        return "showExam";
+        return "post";
     }
 
     @GetMapping("/saveExam")

@@ -5,6 +5,7 @@ import ir.iraniancyber.khaneshyar.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -28,5 +29,9 @@ public class PostServiceImpl implements PostService {
     public List<Post> findTop4ByOrderByViewsDesc()
     {
         return postRepository.findTop4ByOrderByViewsDesc();
+    }
+    @Override
+    public Optional<Post> findBySlug(String slug){
+        return postRepository.findBySlug(slug);
     }
 }

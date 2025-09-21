@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>post</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header id="header"></header>
+    <div id="container"></div>
+    <footer id="footer"></footer>
+    <script src="/headerMaker.js"></script>
+    <script src="/footerMaker.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get("slug");
+        fetch("http://localhost:8083/posts/findBySlug?slug="+slug)
+        .then(res=>res.json())
+        .then(res=>{
+            alert("id:"+res.id);
+        })
+    </script>
+</body>
+</html>
