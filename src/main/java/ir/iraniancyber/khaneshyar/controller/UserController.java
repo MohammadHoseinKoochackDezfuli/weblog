@@ -58,7 +58,7 @@ public class UserController {
 
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            System.out.println("ERROR:"+e.getMessage());
+            System.out.println("ERROR:" + e.getMessage());
             return ResponseEntity.status(401).build();
         }
     }

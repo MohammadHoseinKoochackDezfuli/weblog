@@ -20,9 +20,9 @@ public class CategoryController {
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
+
     @GetMapping("/findAll")
-    public List<Category> findAll()
-    {
+    public List<Category> findAll() {
         return categoryService.findAll();
     }
 }

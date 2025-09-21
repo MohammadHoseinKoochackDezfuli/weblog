@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>جدیدترین وبلاگ ها</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header id="header"></header>
+<div class="container">
+    <h1>پربازدیدترین وبلاگ ها</h1>
+    <div id="moreViews"></div>
+</div>
+<footer id="footer"></footer>
+<script src="/headerMaker.js"></script>
+<script src="/footerMaker.js"></script>
+<script src="/worker.js"></script>
+<script>
+    fetch("http://localhost:8083/posts/findTop10ByOrderByViewsDesc")
+        .then(res=>res.json())
+        .then(res=>{
+            document.getElementById("moreViews").innerHTML=listPostMaker(res);
+        })
+</script>
+</body>
+</html>

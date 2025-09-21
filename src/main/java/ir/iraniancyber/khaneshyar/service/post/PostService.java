@@ -6,8 +6,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostService {
-    List<Post> findTop4ByOrderByCreatedAtDesc();
     long count();
+
+    List<Post> findTop4ByOrderByCreatedAtDesc();
+
+    List<Post> findTop10ByOrderByCreatedAtDesc();
+
     List<Post> findTop4ByOrderByViewsDesc();
+
+    List<Post> findTop10ByOrderByViewsDesc();
+
+    List<Post> findTop10ByCategoryId(String slug);
+
     Optional<Post> findBySlug(String slug);
 }

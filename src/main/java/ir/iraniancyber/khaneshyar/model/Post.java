@@ -17,6 +17,7 @@ public class Post {
     private LocalDateTime updateAt;
     private LocalDateTime publishAt;
     private int views;
+    private Category category;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -109,5 +110,13 @@ public class Post {
 
     public void setViews(int views) {
         this.views = views;
+    }
+    @ManyToOne
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

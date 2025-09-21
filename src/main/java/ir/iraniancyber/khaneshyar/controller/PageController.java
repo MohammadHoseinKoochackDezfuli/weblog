@@ -13,6 +13,21 @@ public class PageController {
         return "index";
     }
 
+    @GetMapping("/news")
+    public String news() {
+        return "news";
+    }
+
+    @GetMapping("/moreViews")
+    public String moreViews() {
+        return "moreViews";
+    }
+
+    @GetMapping("/category")
+    public String category() {
+        return "category";
+    }
+
     @GetMapping("/post")
     //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public String showExam() {

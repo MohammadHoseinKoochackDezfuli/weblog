@@ -37,81 +37,13 @@
 <footer id="footer"></footer>
 <script src="/footerMaker.js"></script>
 <script src="/headerMaker.js"></script>
+<script src="/worker.js"></script>
 <script>
-    function postMaker(res)
-    {
-        return `<div style="width: 50%;margin-left: 20px">
-                <div class="weblog">
-                    <h4>`+res.title+`</h4>
-                    <p>`+res.content+`</p>
-                    <span><span>`+res.views+`</span> مشاهده</span>
-                </div>
-            </div>`;
-    }
-    function listPostMaker(res)
-    {
-        var text="";
-        for(var i=0;i<res.length;i++)
-        {
-            if(i%2==0)
-            {
-                text+=`
-        <div style="height: 20px;"></div>
-        <div style="display: flex;">`;
-            }
-            else
-            {
-                text+=`<div style="width: 20px;"></div>`;
-            }
-            text+=postMaker(res[i]);
-            if(i%2==1)
-            {
-                text+="</div>";
-            }
-        }
-        return text;
-    }
-    function categoryMaker(res)
-    {
-        return `<div style="width: 50%;margin-left: 20px">
-                <div class="category">
-                    <h4>`+res.name+`</h4>
-                    <p>`+res.description+`</p>
-                </div>
-            </div>`;
-    }
-    function listCategoryMaker(res)
-    {
-        var text="";
-        for(var i=0;i<res.length;i++)
-        {
-            if(i%2==0)
-            {
-                text+=`
-        <div style="height: 20px;"></div>
-        <div style="display: flex;">`;
-            }
-            else
-            {
-                text+=`<div style="width: 20px;"></div>`;
-            }
-            text+=categoryMaker(res[i]);
-            if(i%2==1)
-            {
-                text+="</div>";
-            }
-        }
-        return text;
-    }
-    function round(number)
-    {
-        var newNumber=number[0];
-        for(var i=0;i<number.length-1;i++)
-        {
-            newNumber+="0";
-        }
-        return newNumber;
-    }
+    fetch("http://localhost:8083/posts/count")
+        .then(res => res.text())
+        .then(res=>{
+            document.getElementById("number").innerHTML="+"+round(res);
+        })
     fetch("http://localhost:8083/categories/findAll")
     .then(res=>res.json())
     .then(res=>{
@@ -127,12 +59,6 @@
     .then(res=>{
         document.getElementById("moreView").innerHTML=listPostMaker(res);
     })
-    fetch("http://localhost:8083/posts/count")
-        .then(res => res.text())
-        .then(res=>{
-            document.getElementById("number").innerHTML="+"+round(res);
-    })
-
 </script>
 </body>
 </html>

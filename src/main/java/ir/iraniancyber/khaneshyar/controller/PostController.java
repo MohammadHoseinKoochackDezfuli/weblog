@@ -17,23 +17,39 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
+
+    @GetMapping("/count")
+    public long count() {
+        return postService.count();
+    }
+
     @GetMapping("/findBySlug")
-    public Optional<Post> findBySlug(@RequestParam String slug)
-    {
+    public Optional<Post> findBySlug(@RequestParam String slug) {
         return postService.findBySlug(slug);
     }
+
+    @GetMapping("/findByCategoryId")
+    public List<Post> findTop10ByCategoryId(@RequestParam String slug) {
+        return postService.findTop10ByCategoryId(slug);
+    }
+
     @GetMapping("/findTop4ByOrderByCreatedAtDesc")
     public List<Post> findTop4ByOrderByCreatedAtDesc() {
         return postService.findTop4ByOrderByCreatedAtDesc();
     }
-    @GetMapping("/count")
-    public long count()
-    {
-        return postService.count();
+
+    @GetMapping("/findTop10ByOrderByCreatedAtDesc")
+    public List<Post> findTop10ByOrderByCreatedAtDesc() {
+        return postService.findTop10ByOrderByCreatedAtDesc();
     }
+
     @GetMapping("/findTop4ByOrderByViewsDesc")
-    public List<Post> findTop4ByOrderByViewsDesc()
-    {
+    public List<Post> findTop4ByOrderByViewsDesc() {
         return postService.findTop4ByOrderByViewsDesc();
+    }
+
+    @GetMapping("/findTop10ByOrderByViewsDesc")
+    public List<Post> findTop10ByOrderByViewsDesc() {
+        return postService.findTop10ByOrderByViewsDesc();
     }
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>category</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header id="header"></header>
+<div class="container">
+    <h1 id="category"></h1>
+    <div id="posts"></div>
+</div>
+<footer id="footer"></footer>
+<script src="/headerMaker.js"></script>
+<script src="/footerMaker.js"></script>
+<script src="/worker.js"></script>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("slug");
+    fetch("http://localhost:8083/posts/findByCategoryId?slug="+slug)
+    .then(res=>res.json())
+    .then(res=>{
+        document.getElementById("posts").innerHTML=listPostMaker(res);
+    })
+</script>
+</body>
+</html>
