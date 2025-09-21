@@ -40,8 +40,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/login", "/", "/register","/style.css","/headerMaker.js","/footerMaker.js"
                                 ,"/users/login","/error", "/cat.png")
                         .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/users/login", "/users/register")
-                        .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users/login", "/users/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/posts/findTop4ByOrderByCreatedAtDesc","/posts/count").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();

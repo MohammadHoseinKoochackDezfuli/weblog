@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +8,81 @@
 </head>
 <body>
 <header id="header"></header>
-<div class="container"></div>
+<div class="container">
+    <center>
+        <div class="logo" style="font-size: 60px;">
+            <span>W</span><span>e</span><span>b</span><span>l</span><span>o</span><span>g</span>
+        </div>
+        <br>
+        <br>
+        <p>جستجو میان <span id="number"></span> وبلاگ</p>
+        <div style="width: 200px;display: flex;height: 30px;">
+            <div style="width: 30px;background-color: blue;border: 2px solid blue;">🔎</div>
+            <input placeholder="جستجو مقاله" style="width: 170px;background-color: transparent;border: 2px solid blue;">
+        </div>
+        <br>
+        <br>
+        <h2>جدیدترین وبلاگ ها</h2>
+        <div id="newWeblogs"></div>
+    </center>
+</div>
 <footer id="footer"></footer>
 <script src="/footerMaker.js"></script>
 <script src="/headerMaker.js"></script>
+<script>
+    function postMaker(res)
+    {
+        return `<div style="width: 50%;margin-left: 20px">
+                <div class="weblog">
+                    <h4>`+res.title+`</h4>
+                    <p>`+res.content+`</p>
+                    <span><span>`+res.views+`</span> مشاهده</span>
+                </div>
+            </div>`;
+    }
+    function listPostMaker(res)
+    {
+        var text="";
+        for(var i=0;i<res.length;i++)
+        {
+            if(i%2==0)
+            {
+                text+=`
+        <div style="height: 20px;"></div>
+        <div style="display: flex;">`;
+            }
+            else
+            {
+                text+=`<div style="width: 20px;"></div>`;
+            }
+            text+=postMaker(res[i]);
+            if(i%2==1)
+            {
+                text+="</div>";
+            }
+        }
+        return text;
+    }
+    function round(number)
+    {
+        var newNumber=number[0];
+        for(var i=0;i<number.length-1;i++)
+        {
+            newNumber+="0";
+        }
+        return newNumber;
+    }
+    fetch("http://localhost:8083/posts/findTop4ByOrderByCreatedAtDesc")
+        .then(res=>res.json())
+        .then(res=>{
+            document.getElementById("newWeblogs").innerHTML=listPostMaker(res);
+        })
+    fetch("http://localhost:8083/posts/count")
+        .then(res => res.text())
+        .then(res=>{
+            document.getElementById("number").innerHTML="+"+round(res);
+    })
+
+</script>
 </body>
 </html>

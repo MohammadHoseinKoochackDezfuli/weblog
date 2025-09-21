@@ -78,6 +78,7 @@ public class Post {
         this.author = author;
     }
 
+    @Column(name = "createdAt")
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
