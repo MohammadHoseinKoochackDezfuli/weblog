@@ -3,7 +3,7 @@ function postMaker(res)
     return `<a style="width: 50%;margin-left: 20px" href="/post?slug=`+res.slug+`"><div>
                 <div class="weblog">
                     <h4>`+res.title+`</h4>
-                    <p>`+res.content+`</p>
+                    <p>`+res.excerpt+`</p>
                     <span><span>`+res.views+`</span> مشاهده</span>
                 </div>
             </div></a>`;
