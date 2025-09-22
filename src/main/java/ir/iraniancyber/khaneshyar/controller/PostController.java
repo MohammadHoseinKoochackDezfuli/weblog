@@ -52,4 +52,9 @@ public class PostController {
     public List<Post> findTop10ByOrderByViewsDesc() {
         return postService.findTop10ByOrderByViewsDesc();
     }
+
+    @GetMapping("/findByTitleContaining")
+    public List<Post> findByTitleContaining(@RequestParam String search) {
+        return postService.findByTitleContaining(search);
+    }
 }

@@ -57,4 +57,9 @@ public class PostServiceImpl implements PostService {
         int id = categoryRepository.findAllBySlug(slug).get(0).getId();
         return postRepository.findTop10ByCategoryId(id);
     }
+    @Override
+    public List<Post> findByTitleContaining(String search)
+    {
+        return postRepository.findByTitleContaining(search);
+    }
 }

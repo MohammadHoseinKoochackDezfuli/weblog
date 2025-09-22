@@ -41,7 +41,7 @@ public class SecurityConfig {
                                 ,"/users/login","/error","/post","/news","category","/worker.js","/moreViews","/tag")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/login", "/users/register").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/posts/count", "/posts/findTop4ByOrderByCreatedAtDesc","/posts/findTop10ByOrderByCreatedAtDesc","/posts/findTop4ByOrderByViewsDesc","/posts/findTop10ByOrderByViewsDesc","/categories/findAll","/posts/findBySlug","/posts/findByCategoryId","/tags/findAllByPostId","/tags/findAllBySlug").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/posts/count", "/posts/findTop4ByOrderByCreatedAtDesc","/posts/findTop10ByOrderByCreatedAtDesc","/posts/findTop4ByOrderByViewsDesc","/posts/findTop10ByOrderByViewsDesc","/categories/findAll","/posts/findBySlug","/posts/findByCategoryId","/tags/findAllByPostId","/tags/findAllBySlug","/posts/findByTitleContaining").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();

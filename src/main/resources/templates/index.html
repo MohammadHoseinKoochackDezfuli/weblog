@@ -17,8 +17,14 @@
         <br>
         <p>جستجو میان <span id="number"></span> وبلاگ</p>
         <div style="width: 200px;display: flex;height: 30px;">
-            <div style="width: 30px;background-color: blue;border: 2px solid blue;">🔎</div>
-            <input placeholder="جستجو مقاله" style="width: 170px;background-color: transparent;border: 2px solid blue;">
+            <div onclick="SEARCH();" style="width: 30px;background-color: blue;border: 2px solid blue;">🔎</div>
+            <input id="searcher" placeholder="جستجو مقاله" style="width: 170px;background-color: transparent;border: 2px solid blue;">
+        </div>
+        <div id="search" style="display: none;">
+            <br>
+            <br>
+            <h2 id="searchName"></h2>
+            <div id="searchResult"></div>
         </div>
         <br>
         <br>
@@ -39,6 +45,14 @@
 <script src="/headerMaker.js"></script>
 <script src="/worker.js"></script>
 <script>
+    var searcher=document.getElementById("searcher");
+    searcher.onkeypress=function (e)
+    {
+        if(e.key=="Enter")
+        {
+            SEARCH();
+        }
+    }
     fetch("http://localhost:8083/posts/count")
         .then(res => res.text())
         .then(res=>{
@@ -59,6 +73,27 @@
     .then(res=>{
         document.getElementById("moreView").innerHTML=listPostMaker(res);
     })
+    function SEARCH()
+    {
+        var search=searcher.value;
+        if(search=="")
+        {
+            return;
+        }
+        document.getElementById("search").style.display="inline";
+        document.getElementById("searchName").innerHTML="جستجو برای "+search;
+        document.getElementById("searchResult").innerHTML="loading...";
+        fetch("http://localhost:8083/posts/findByTitleContaining?search="+search)
+        .then(res=>res.json())
+        .then(res=>{
+            var result=listPostMaker(res);
+            if(res.length==0)
+            {
+                result="بدون نتیجه";
+            }
+            document.getElementById("searchResult").innerHTML=result;
+        })
+    }
 </script>
 </body>
 </html>
