@@ -71,4 +71,17 @@ public class Comment {
     public void setPost(Post post) {
         this.post = post;
     }
+
+    public Comment(int id, String content, String authorName, String authorEmail, Boolean approved, LocalDateTime createdAt, Post post) {
+        this.id = id;
+        this.content = content;
+        this.authorName = authorName;
+        this.authorEmail = authorEmail;
+        this.approved = approved;
+        this.createdAt = createdAt;
+        this.post = post;
+    }
+
+    public Comment() {
+    }
 }

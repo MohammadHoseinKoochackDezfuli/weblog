@@ -22,4 +22,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findTop10ByCategoryId(int id);
 
     List<Post> findByTitleContaining(String keyword);
+
+    Optional<Post> findById(int id);
 }

@@ -10,11 +10,35 @@
     <div class="container">
         <div id="content">loading...</div>
         <div id="tags">loading...</div>
+        <div class="comments-section">
+            <h3>نظرات کاربران</h3>
+            <div id="comments">
+                <!-- مثال لورم ایپسوم -->
+                <div class="comment-card">
+                    <div class="username">Ali123</div>
+                    <div class="comment-text">لورم ایپسوم متن ساختگی برای نمایش نظر کاربران.</div>
+                </div>
+                <div class="comment-card">
+                    <div class="username">Sara456</div>
+                    <div class="comment-text">لورم ایپسوم متن دیگری برای تست طراحی بخش نظرات.</div>
+                </div>
+            </div>
+
+            <!-- فرم ثبت نظر -->
+            <div class="comment-box">
+                <textarea id="comment" placeholder="نظرت چیه؟"></textarea>
+                <button onclick="COMMENT()">➤</button>
+            </div>
+        </div>
     </div>
     <footer id="footer"></footer>
     <script src="/headerMaker.js"></script>
     <script src="/footerMaker.js"></script>
     <script>
+        var commenter=document.getElementById("comment");
+        commenter.onkeypress=function (e) {
+            if(e.key=="Enter") COMMENT();
+        }
         const params = new URLSearchParams(window.location.search);
         const slug = params.get("slug");
         fetch("http://localhost:8083/posts/findBySlug?slug="+slug)
@@ -36,6 +60,18 @@
             }
             document.getElementById("tags").innerHTML=text;
         })
+        function COMMENT()
+        {
+            var text=document.getElementById("text");
+            if(text=="")
+            {
+                return;
+            }
+            if(confirm("نظر ارسال شود؟"))
+            {
+                fetch("http://localhost:8083/")
+            }
+        }
     </script>
 </body>
 </html>
