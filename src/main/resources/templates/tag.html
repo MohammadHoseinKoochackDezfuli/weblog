@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>tag</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header id="header"></header>
+    <div class="container">
+        <h1 id="name"></h1>
+        <div id="posts"></div>
+    </div>
+    <footer id="footer"></footer>
+    <script src="/headerMaker.js"></script>
+    <script src="/footerMaker.js"></script>
+    <script src="/worker.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get("slug");
+        fetch("http://localhost:8083/tags/findAllBySlug?slug="+slug)
+        .then(res=>res.json())
+        .then(res=>{
+            var list=[];
+            for(var i=0;i<res.length;i++)
+            {
+                list[list.length]=res[i].post;
+            }
+            document.getElementById("posts").innerHTML=listPostMaker(list);
+        })
+    </script>
+</body>
+</html>

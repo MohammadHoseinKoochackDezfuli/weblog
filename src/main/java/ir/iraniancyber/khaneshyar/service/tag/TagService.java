@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface TagService {
     List<TagDto> findAllByPostId(String slug);
+    List<Tag> findAllBySlug(String slug);
 }

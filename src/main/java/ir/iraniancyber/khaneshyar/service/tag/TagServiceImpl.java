@@ -34,4 +34,9 @@ public class TagServiceImpl implements TagService{
         }
         return dtoList;
     }
+    @Override
+    public List<Tag> findAllBySlug(String slug)
+    {
+        return tagRepository.findAllBySlug(slug);
+    }
 }

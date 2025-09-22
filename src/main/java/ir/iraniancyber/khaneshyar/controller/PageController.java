@@ -34,28 +34,9 @@ public class PageController {
         return "post";
     }
 
-    @GetMapping("/saveExam")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String saveExam() {
-        return "saveExam";
-    }
-
-    @GetMapping("/saveQuestion")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String saveQuestion() {
-        return "saveQuestion";
-    }
-
-    @GetMapping("/showQuestion")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String showQuestion() {
-        return "showQuestion";
-    }
-
-    @GetMapping("/updateQuestion")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String updateQuestion() {
-        return "updateQuestion";
+    @GetMapping("/tag")
+    public String tag() {
+        return "tag";
     }
 
     @GetMapping("/login")

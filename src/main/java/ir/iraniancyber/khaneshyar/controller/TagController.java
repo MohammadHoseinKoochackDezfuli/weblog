@@ -22,4 +22,6 @@ public class TagController {
     {
         return tagService.findAllByPostId(slug);
     }
+    @GetMapping("/findAllBySlug")
+    public List<Tag> findAllBySlug(@RequestParam String slug){return tagService.findAllBySlug(slug);}
 }
