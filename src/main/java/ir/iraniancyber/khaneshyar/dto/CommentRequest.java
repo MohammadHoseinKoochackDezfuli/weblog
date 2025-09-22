@@ -2,7 +2,12 @@ package ir.iraniancyber.khaneshyar.dto;
 
 public class CommentRequest {
     private String content;
-    private int postId;
+    private String postSlug;
+
+    public CommentRequest(String content, String postSlug) {
+        this.content = content;
+        this.postSlug = postSlug;
+    }
 
     public String getContent() {
         return content;
@@ -12,11 +17,11 @@ public class CommentRequest {
         this.content = content;
     }
 
-    public int getPostId() {
-        return postId;
+    public String getPostSlug() {
+        return postSlug;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setPostSlug(String postSlug) {
+        this.postSlug = postSlug;
     }
 }

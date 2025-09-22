@@ -13,18 +13,8 @@
         <div class="comments-section">
             <h3>نظرات کاربران</h3>
             <div id="comments">
-                <!-- مثال لورم ایپسوم -->
-                <div class="comment-card">
-                    <div class="username">Ali123</div>
-                    <div class="comment-text">لورم ایپسوم متن ساختگی برای نمایش نظر کاربران.</div>
-                </div>
-                <div class="comment-card">
-                    <div class="username">Sara456</div>
-                    <div class="comment-text">لورم ایپسوم متن دیگری برای تست طراحی بخش نظرات.</div>
-                </div>
+                loading...
             </div>
-
-            <!-- فرم ثبت نظر -->
             <div class="comment-box">
                 <textarea id="comment" placeholder="نظرت چیه؟"></textarea>
                 <button onclick="COMMENT()">➤</button>
@@ -34,6 +24,7 @@
     <footer id="footer"></footer>
     <script src="/headerMaker.js"></script>
     <script src="/footerMaker.js"></script>
+    <script src="/timer.js"></script>
     <script>
         var commenter=document.getElementById("comment");
         commenter.onkeypress=function (e) {
@@ -60,6 +51,26 @@
             }
             document.getElementById("tags").innerHTML=text;
         })
+        fetch("http://localhost:8083/comments/findAllBySlug?slug="+slug)
+        .then(res=>res.json())
+        .then(res=>{
+            var text=``;
+            for(var i=0;i<res.length;i++)
+            {
+                text+=`<div class="comment-card">
+                    <div class="username">`+res[i].authorName+`</div>
+                    <div class="comment-text">`+res[i].content+`</div>
+                    <br>
+                    <span>`+timeDiffString(res[i].createdAt)+`</span>
+                </div>
+`;
+            }
+            if(text=="")
+            {
+                text="هیچ نظری ثبت نشده.";
+            }
+            document.getElementById("comments").innerHTML=text;
+        })
         function COMMENT()
         {
             var text=document.getElementById("text");
@@ -69,7 +80,17 @@
             }
             if(confirm("نظر ارسال شود؟"))
             {
-                fetch("http://localhost:8083/")
+                // fetch("http://localhost:8083/comments/", {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                //     body: JSON.stringify({
+                //         postSlug: slug,
+                //         content: text
+                //     }),
+                //     credentials: "include"
+                // });
             }
         }
     </script>

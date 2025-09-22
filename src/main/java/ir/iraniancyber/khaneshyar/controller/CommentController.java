@@ -1,5 +1,6 @@
 package ir.iraniancyber.khaneshyar.controller;
 
+import ir.iraniancyber.khaneshyar.dto.CommentDto;
 import ir.iraniancyber.khaneshyar.dto.CommentRequest;
 import ir.iraniancyber.khaneshyar.model.Comment;
 import ir.iraniancyber.khaneshyar.model.Post;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
@@ -26,13 +28,17 @@ public class CommentController {
         this.postRepository = postRepository;
         this.commentService = commentService;
     }
-
+    @GetMapping("/findAllBySlug")
+    public List<CommentDto> findAll(@RequestParam String slug)
+    {
+        return commentService.findAllByPostId(postRepository.findBySlug(slug).get().getId());
+    }
 
     @PostMapping
     public void save(@RequestBody CommentRequest commentRequest, HttpServletRequest request) {
         String username = request.getUserPrincipal().getName();
         User user = userRepository.findByUsername(username).get();
-        Post post = postRepository.findById(commentRequest.getPostId()).get();
+        Post post = postRepository.findBySlug(commentRequest.getPostSlug()).get();
 
         Comment comment = new Comment(0, commentRequest.getContent(), user.getUsername(), user.getEmail(), null, LocalDateTime.now(), post);
         commentService.save(comment);

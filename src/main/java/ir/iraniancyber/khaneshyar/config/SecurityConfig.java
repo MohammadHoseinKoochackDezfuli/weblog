@@ -38,10 +38,10 @@ public class SecurityConfig {
                                         .permitAll()
                 )
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/login", "/", "/register","/style.css","/headerMaker.js","/footerMaker.js"
-                                ,"/users/login","/error","/post","/news","category","/worker.js","/moreViews","/tag")
+                                ,"/users/login","/error","/post","/news","category","/worker.js","/moreViews","/tag","/timer.js")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/login", "/users/register").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/posts/count", "/posts/findTop4ByOrderByCreatedAtDesc","/posts/findTop10ByOrderByCreatedAtDesc","/posts/findTop4ByOrderByViewsDesc","/posts/findTop10ByOrderByViewsDesc","/categories/findAll","/posts/findBySlug","/posts/findByCategoryId","/tags/findAllByPostId","/tags/findAllBySlug","/posts/findByTitleContaining").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/posts/count", "/posts/findTop4ByOrderByCreatedAtDesc","/posts/findTop10ByOrderByCreatedAtDesc","/posts/findTop4ByOrderByViewsDesc","/posts/findTop10ByOrderByViewsDesc","/categories/findAll","/posts/findBySlug","/posts/findByCategoryId","/tags/findAllByPostId","/tags/findAllBySlug","/posts/findByTitleContaining","/comments/findAllBySlug").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
