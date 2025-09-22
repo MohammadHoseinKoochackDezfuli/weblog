@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" xmlns="http://www.w3.org/1999/html">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,91 +8,82 @@
 </head>
 <body>
 <header id="header"></header>
-<div class="container">
-    <center>
-        <div class="logo" style="font-size: 60px;">
-            <span>W</span><span>e</span><span>b</span><span>l</span><span>o</span><span>g</span>
-        </div>
-        <br>
-        <br>
-        <p>جستجو میان <span id="number"></span> وبلاگ</p>
-        <div style="width: 200px;display: flex;height: 30px;">
-            <div onclick="SEARCH();" style="width: 30px;background-color: blue;border: 2px solid blue;">🔎</div>
-            <input id="searcher" placeholder="جستجو مقاله" style="width: 170px;background-color: transparent;border: 2px solid blue;">
-        </div>
-        <div id="search" style="display: none;">
-            <br>
-            <br>
-            <h2 id="searchName"></h2>
-            <div id="searchResult"></div>
-        </div>
-        <br>
-        <br>
-        <h2>دسته بندی ها</h2>
-        <div id="categories"></div>
-        <br>
-        <br>
-        <h2>جدیدترین وبلاگ ها</h2>
-        <div id="newWeblogs"></div>
-        <br>
-        <br>
-        <h2>پربازدیدترین وبلاگ ها</h2>
-        <div id="moreView"></div>
-    </center>
-</div>
+
+<section class="hero">
+    <h1>به وبلاگ خوش اومدی 👋</h1>
+    <p>اینجا می‌تونی بین <span id="number"></span> مقاله جستجو کنی.</p>
+    <div class="search-box">
+        <input id="searcher" type="text" placeholder="چی می‌خوای بخونی؟">
+        <button onclick="SEARCH()">🔎</button>
+    </div>
+</section>
+
+<section id="search" style="display:none;" class="container">
+    <h2 id="searchName"></h2>
+    <div id="searchResult"></div>
+</section>
+
+<section class="container">
+    <h2>📂 دسته‌بندی‌ها</h2>
+    <div id="categories"></div>
+</section>
+
+<section class="container">
+    <h2>🆕 جدیدترین وبلاگ‌ها</h2>
+    <div id="newWeblogs"></div>
+</section>
+
+<section class="container">
+    <h2>🔥 پربازدیدترین وبلاگ‌ها</h2>
+    <div id="moreView"></div>
+</section>
+
 <footer id="footer"></footer>
+
 <script src="/footerMaker.js"></script>
 <script src="/headerMaker.js"></script>
 <script src="/worker.js"></script>
 <script>
     var searcher=document.getElementById("searcher");
-    searcher.onkeypress=function (e)
-    {
-        if(e.key=="Enter")
-        {
-            SEARCH();
-        }
+    searcher.onkeypress=function (e) {
+        if(e.key=="Enter") SEARCH();
     }
+
     fetch("http://localhost:8083/posts/count")
         .then(res => res.text())
-        .then(res=>{
-            document.getElementById("number").innerHTML="+"+round(res);
-        })
+        .then(res=> document.getElementById("number").innerHTML="+"+round(res));
+
     fetch("http://localhost:8083/categories/findAll")
-    .then(res=>res.json())
-    .then(res=>{
-        document.getElementById("categories").innerHTML=listCategoryMaker(res);
-    })
+        .then(res=>res.json())
+        .then(res=>{
+            document.getElementById("categories").innerHTML=listCategoryMaker(res);
+        });
+
     fetch("http://localhost:8083/posts/findTop4ByOrderByCreatedAtDesc")
         .then(res=>res.json())
         .then(res=>{
             document.getElementById("newWeblogs").innerHTML=listPostMaker(res);
-        })
+        });
+
     fetch("http://localhost:8083/posts/findTop4ByOrderByViewsDesc")
-    .then(res=>res.json())
-    .then(res=>{
-        document.getElementById("moreView").innerHTML=listPostMaker(res);
-    })
-    function SEARCH()
-    {
-        var search=searcher.value;
-        if(search=="")
-        {
-            return;
-        }
-        document.getElementById("search").style.display="inline";
-        document.getElementById("searchName").innerHTML="جستجو برای "+search;
-        document.getElementById("searchResult").innerHTML="loading...";
-        fetch("http://localhost:8083/posts/findByTitleContaining?search="+search)
         .then(res=>res.json())
         .then(res=>{
-            var result=listPostMaker(res);
-            if(res.length==0)
-            {
-                result="بدون نتیجه";
-            }
-            document.getElementById("searchResult").innerHTML=result;
-        })
+            document.getElementById("moreView").innerHTML=listPostMaker(res);
+        });
+
+    function SEARCH() {
+        var search=searcher.value;
+        if(search=="") return;
+        document.getElementById("search").style.display="block";
+        document.getElementById("searchName").innerHTML="جستجو برای "+search;
+        document.getElementById("searchResult").innerHTML="در حال بارگذاری...";
+        fetch("http://localhost:8083/posts/findByTitleContaining?search="+search)
+            .then(res=>res.json())
+            .then(res=>{
+                var result=listPostMaker(res);
+                if(res.length==0) result="بدون نتیجه";
+                document.getElementById("searchResult").innerHTML=result;
+            });
     }
 </script>
 </body>
