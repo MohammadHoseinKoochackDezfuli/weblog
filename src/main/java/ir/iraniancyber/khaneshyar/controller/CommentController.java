@@ -34,13 +34,13 @@ public class CommentController {
         return commentService.findAllByPostId(postRepository.findBySlug(slug).get().getId());
     }
 
-    @PostMapping
-    public void save(@RequestBody CommentRequest commentRequest, HttpServletRequest request) {
+    @GetMapping("/save")
+    public void save(@RequestParam String postSlug ,@RequestParam String text, HttpServletRequest request) {
         String username = request.getUserPrincipal().getName();
         User user = userRepository.findByUsername(username).get();
-        Post post = postRepository.findBySlug(commentRequest.getPostSlug()).get();
+        Post post = postRepository.findBySlug(postSlug).get();
 
-        Comment comment = new Comment(0, commentRequest.getContent(), user.getUsername(), user.getEmail(), null, LocalDateTime.now(), post);
+        Comment comment = new Comment(0, text, user.getUsername(), user.getEmail(), null, LocalDateTime.now(), post);
         commentService.save(comment);
     }
 
