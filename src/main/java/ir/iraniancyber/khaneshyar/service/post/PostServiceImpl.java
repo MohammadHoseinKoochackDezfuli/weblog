@@ -55,7 +55,6 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> findTop10ByCategoryId(String slug) {
         int id = categoryRepository.findAllBySlug(slug).get(0).getId();
-        System.out.println(id);
         return postRepository.findTop10ByCategoryId(id);
     }
 }

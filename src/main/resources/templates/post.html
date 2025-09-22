@@ -7,7 +7,10 @@
 </head>
 <body>
     <header id="header"></header>
-    <div id="container"></div>
+    <div class="container">
+        <div id="content">loading...</div>
+        <div id="tags">loading...</div>
+    </div>
     <footer id="footer"></footer>
     <script src="/headerMaker.js"></script>
     <script src="/footerMaker.js"></script>
@@ -17,7 +20,21 @@
         fetch("http://localhost:8083/posts/findBySlug?slug="+slug)
         .then(res=>res.json())
         .then(res=>{
-            alert("id:"+res.id);
+            document.getElementById("content").innerHTML=res.content;
+        })
+        fetch("http://localhost:8083/tags/findAllByPostId?slug="+slug)
+        .then(res=>res.json())
+        .then(res=>{
+            var text="";
+            for(var i=0;i<res.length;i++)
+            {
+                if(i!=0)
+                {
+                    text+="<br>";
+                }
+                text+="<a href='../tag?slug="+res[i].slug+"'>#"+res[i].name+"</a>";
+            }
+            document.getElementById("tags").innerHTML=text;
         })
     </script>
 </body>
