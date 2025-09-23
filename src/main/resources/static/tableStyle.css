@@ -27,3 +27,28 @@ th {
 .comment-false{
     color: red;
 }
+.button-null{
+    background-color: white;
+}
+.button-true{
+    background-color: blue;
+}
+.button-false{
+    background-color: red;
+}
+.button-null,.button-true,.button-false{
+    color: black;
+    margin: 0px;
+    padding: 5px;
+    border: 0px;
+    border-radius: 5px;
+    transition: 0.4s;
+}
+.button-null:hover,.button-true:hover,.button-false:hover{
+    background-color: gray;
+}
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

@@ -5,6 +5,7 @@ import ir.iraniancyber.khaneshyar.dto.TagDto;
 import ir.iraniancyber.khaneshyar.model.Tag;
 import ir.iraniancyber.khaneshyar.service.post.PostService;
 import ir.iraniancyber.khaneshyar.service.tag.TagService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

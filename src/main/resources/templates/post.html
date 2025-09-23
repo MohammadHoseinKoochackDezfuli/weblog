@@ -83,7 +83,7 @@
                 fetch("http://localhost:8083/comments/save?postSlug="+slug+"&text="+text)
                 .then(
                     r=> {
-                        if (r.status===200) {
+                        if (r.url!=="http://localhost:8083/login") {
                             alert("نظر ارسال شد.بعد از تایید ادمین بقیه می توانند نظر شما را ببینند.");
                         }
                         else {

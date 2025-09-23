@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentServiceImpl implements CommentService{
@@ -47,5 +48,10 @@ public class CommentServiceImpl implements CommentService{
             commentAdmins.add(new CommentAdmin(comment.getId(),comment.getContent(),comment.getAuthorName(),comment.getAuthorEmail(),comment.getApproved(),comment.getCreatedAt(), comment.getPost().getSlug()));
         }
         return commentAdmins;
+    }
+    @Override
+    public Optional<Comment> findAllById(int id)
+    {
+        return commentRepository.findAllById(id);
     }
 }
