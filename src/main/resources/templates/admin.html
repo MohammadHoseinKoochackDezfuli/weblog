@@ -22,7 +22,7 @@
     <script src="/tableMaker.js"></script>
     <script>
         var o = "res[y].";
-        tableCreate("comments","comments/findAll",["id", "content", "authorName", "authorEmail", "approved", "createdTime", "postLink"],[o + "id", o + "content", o + "authorName", o + "authorEmail", o + "approved", "timeDiffString(" + o + "createdAt)", `"<a href='../post?slug="+` + o + `postSlug+"'>link</a>"`]);
+        tableCreate("comments","comments/findAll",["id", "content", "authorName", "authorEmail", "approved", "createdTime", "postLink"],[o + "id", o + "content", o + "authorName", o + "authorEmail",`"<span class='comment-"+` + o + `approved+"'>"+`+o+`approved`+`+"</span>"`, "timeDiffString(" + o + "createdAt)", `"<a href='../post?slug="+` + o + `postSlug+"'>link</a>"`]);
         tableCreate("users","users/findAll",["id", "fullName", "username", "password", "email", "createdTime", "role"],[o + "id", o + "fullName", o + "username", o + "password", o + "email", "timeDiffString(" + o + "createdAt)", o+"role"]);
         tableCreate("categories","categories/findAll",["id", "name", "slug", "description","link"],[o + "id", o + "name", o + "slug", o + "description", `"<a href='../category?slug="+` + o + `slug+"'>link</a>"`]);
         tableCreate("posts","posts/findAll",["id", "title", "excerpt","status","userId","createdAt","updateAt","publishAt","views","categoryName","link"],[o + "id", o + "title", o + "excerpt", o + "status",o+"userId", "timeDiffString(" + o + "createdAt)", "timeDiffString(" + o + "updateAt)", "timeDiffString(" + o + "publishAt)",o+"views",o+"categoryName", `"<a href='../post?slug="+` + o + `slug+"'>link</a>"`]);
