@@ -1,5 +1,6 @@
 package ir.iraniancyber.khaneshyar.controller;
 
+import ir.iraniancyber.khaneshyar.dto.TagAdmin;
 import ir.iraniancyber.khaneshyar.dto.TagDto;
 import ir.iraniancyber.khaneshyar.model.Tag;
 import ir.iraniancyber.khaneshyar.service.post.PostService;
@@ -24,4 +25,6 @@ public class TagController {
     }
     @GetMapping("/findAllBySlug")
     public List<Tag> findAllBySlug(@RequestParam String slug){return tagService.findAllBySlug(slug);}
+    @GetMapping("/findAll")
+    public List<TagAdmin> findAll(){return tagService.findAll();}
 }

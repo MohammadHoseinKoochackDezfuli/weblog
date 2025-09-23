@@ -1,5 +1,6 @@
 package ir.iraniancyber.khaneshyar.service.post;
 
+import ir.iraniancyber.khaneshyar.dto.PostAdmin;
 import ir.iraniancyber.khaneshyar.model.Post;
 import ir.iraniancyber.khaneshyar.repository.CategoryRepository;
 import ir.iraniancyber.khaneshyar.repository.PostRepository;
@@ -61,5 +62,17 @@ public class PostServiceImpl implements PostService {
     public List<Post> findByTitleContaining(String search)
     {
         return postRepository.findByTitleContaining(search);
+    }
+    @Override
+    public List<PostAdmin> findAll()
+    {
+        List<Post> list=postRepository.findAll();
+        List<PostAdmin> postAdmins=new ArrayList<>();
+        for(int i=0;i<list.size();i++)
+        {
+            Post post=list.get(i);
+            postAdmins.add(new PostAdmin(post.getId(),post.getTitle(),post.getSlug(),post.getExcerpt(),post.getStatus(),post.getAuthor().getId(),post.getCreatedAt(),post.getUpdateAt(),post.getPublishAt(),post.getViews(),post.getCategory().getName()));
+        }
+        return postAdmins;
     }
 }

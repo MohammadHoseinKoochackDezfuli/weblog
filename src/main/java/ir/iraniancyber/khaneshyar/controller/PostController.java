@@ -1,5 +1,6 @@
 package ir.iraniancyber.khaneshyar.controller;
 
+import ir.iraniancyber.khaneshyar.dto.PostAdmin;
 import ir.iraniancyber.khaneshyar.model.Post;
 import ir.iraniancyber.khaneshyar.service.post.PostService;
 import org.springframework.web.bind.annotation.*;
@@ -56,5 +57,10 @@ public class PostController {
     @GetMapping("/findByTitleContaining")
     public List<Post> findByTitleContaining(@RequestParam String search) {
         return postService.findByTitleContaining(search);
+    }
+    @GetMapping("findAll")
+    public List<PostAdmin> findAll()
+    {
+        return postService.findAll();
     }
 }

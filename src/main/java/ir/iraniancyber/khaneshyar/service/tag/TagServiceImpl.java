@@ -1,5 +1,6 @@
 package ir.iraniancyber.khaneshyar.service.tag;
 
+import ir.iraniancyber.khaneshyar.dto.TagAdmin;
 import ir.iraniancyber.khaneshyar.dto.TagDto;
 import ir.iraniancyber.khaneshyar.model.Tag;
 import ir.iraniancyber.khaneshyar.repository.CategoryRepository;
@@ -38,5 +39,17 @@ public class TagServiceImpl implements TagService{
     public List<Tag> findAllBySlug(String slug)
     {
         return tagRepository.findAllBySlug(slug);
+    }
+    @Override
+    public List<TagAdmin> findAll()
+    {
+        List<Tag> tags=tagRepository.findAll();
+        List<TagAdmin> tagAdmins=new ArrayList<>();
+        for(int i=0;i<tags.size();i++)
+        {
+            Tag tag=tags.get(i);
+            tagAdmins.add(new TagAdmin(tag.getId(),tag.getName(),tag.getSlug(),tag.getPost().getId()));
+        }
+        return tagAdmins;
     }
 }

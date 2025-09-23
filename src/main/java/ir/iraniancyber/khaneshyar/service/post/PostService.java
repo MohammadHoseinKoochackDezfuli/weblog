@@ -1,5 +1,6 @@
 package ir.iraniancyber.khaneshyar.service.post;
 
+import ir.iraniancyber.khaneshyar.dto.PostAdmin;
 import ir.iraniancyber.khaneshyar.model.Post;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface PostService {
     Optional<Post> findBySlug(String slug);
 
     List<Post> findByTitleContaining(String search);
+
+    List<PostAdmin> findAll();
 }

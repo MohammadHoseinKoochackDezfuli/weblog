@@ -1,10 +1,9 @@
 package ir.iraniancyber.khaneshyar.service.Comment;
 
+import ir.iraniancyber.khaneshyar.dto.CommentAdmin;
 import ir.iraniancyber.khaneshyar.dto.CommentDto;
 import ir.iraniancyber.khaneshyar.model.Comment;
-import ir.iraniancyber.khaneshyar.repository.CategoryRepository;
 import ir.iraniancyber.khaneshyar.repository.CommentRepository;
-import ir.iraniancyber.khaneshyar.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +35,17 @@ public class CommentServiceImpl implements CommentService{
             commentDtoList.add(new CommentDto(comment.getContent(),comment.getAuthorName(),comment.getCreatedAt()));
         }
         return commentDtoList;
+    }
+    @Override
+    public List<CommentAdmin> findAll()
+    {
+        List<Comment> comments=commentRepository.findAll();
+        List<CommentAdmin> commentAdmins=new ArrayList<>();
+        for(int i=0;i<comments.size();i++)
+        {
+            Comment comment=comments.get(i);
+            commentAdmins.add(new CommentAdmin(comment.getId(),comment.getContent(),comment.getAuthorName(),comment.getAuthorEmail(),comment.getApproved(),comment.getCreatedAt(), comment.getPost().getSlug()));
+        }
+        return commentAdmins;
     }
 }

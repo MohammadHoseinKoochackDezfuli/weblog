@@ -27,9 +27,10 @@ public class PageController {
     public String category() {
         return "category";
     }
-
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @GetMapping("/admin")
+    public String admin(){return "admin";}
     @GetMapping("/post")
-    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public String showExam() {
         return "post";
     }

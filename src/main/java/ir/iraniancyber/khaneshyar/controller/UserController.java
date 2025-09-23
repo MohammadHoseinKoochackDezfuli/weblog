@@ -1,13 +1,16 @@
 package ir.iraniancyber.khaneshyar.controller;
 
+import ir.iraniancyber.khaneshyar.dto.CommentAdmin;
 import ir.iraniancyber.khaneshyar.dto.UserDto;
 import ir.iraniancyber.khaneshyar.model.Role;
 import ir.iraniancyber.khaneshyar.model.User;
+import ir.iraniancyber.khaneshyar.repository.UserRepository;
 import ir.iraniancyber.khaneshyar.service.user.CustomUserDetailService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,17 +20,19 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 public class UserController {
-
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailService customUserDetailService;
     private final AuthenticationManager authenticationManager;
 
-    public UserController(PasswordEncoder passwordEncoder, CustomUserDetailService customUserDetailService, AuthenticationManager authenticationManager) {
+    public UserController(UserRepository userRepository,PasswordEncoder passwordEncoder, CustomUserDetailService customUserDetailService, AuthenticationManager authenticationManager) {
+        this.userRepository=userRepository;
         this.passwordEncoder = passwordEncoder;
         this.customUserDetailService = customUserDetailService;
         this.authenticationManager = authenticationManager;
@@ -61,5 +66,12 @@ public class UserController {
             System.out.println("ERROR:" + e.getMessage());
             return ResponseEntity.status(401).build();
         }
+    }
+
+    @GetMapping("/findAll")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public List<User> findAll()
+    {
+        return userRepository.findAll();
     }
 }
