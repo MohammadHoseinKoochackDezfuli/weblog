@@ -28,4 +28,25 @@ public class TagController {
     public List<Tag> findAllBySlug(@RequestParam String slug){return tagService.findAllBySlug(slug);}
     @GetMapping("/findAll")
     public List<TagAdmin> findAll(){return tagService.findAll();}
+    @GetMapping("/delete")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public void delete(@RequestParam int id)
+    {
+        tagService.delete(id);
+    }
+    @GetMapping("/add")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public void add()
+    {
+        tagService.add();
+    }
+    @GetMapping("/update")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public void update(@RequestParam int id,@RequestParam String name,@RequestParam String slug,@RequestParam int postId)
+    {
+        Tag tag=tagService.findById(id);
+        tag.setName(name);
+        tag.setSlug(slug);
+        tagService.update(tag,postId);
+    }
 }

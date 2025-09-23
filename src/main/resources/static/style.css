@@ -94,17 +94,10 @@ header nav a:hover { color: #ffeb3b; }
     transition: all 0.3s ease;
     border-radius: 20px;
     color: #fff;
-    min-height: 200px;
     max-height: 360px;
     overflow: hidden;
     box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
-
-.category {
-    min-height: 100px;
-    max-height: 160px;
-}
-
 .weblog h4,
 .category h4 {
     text-align: center;

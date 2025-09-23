@@ -15,7 +15,7 @@ function tableMaker(res,td,th)
         for(var x=0;x<th.length;x++)
         {
             try {
-                text+="<th>"+eval(th[x])+"</th>";
+                text+="<th class='id"+res[y][0]+"col"+td[x]+"'>"+eval(th[x])+"</th>";
             }
             catch (e)
             {

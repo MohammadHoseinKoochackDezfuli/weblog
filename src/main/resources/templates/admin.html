@@ -19,7 +19,7 @@
     <table id="users"></table>
     <h2>post</h2>
     <table id="posts"></table>
-    <h2>tag</h2>
+    <h2>tag</h2><button class="button-true" onclick="tagAdd();">+</button>
     <table id="tags"></table>
     <script src="/timer.js"></script>
     <script src="/tableMaker.js"></script>
@@ -29,7 +29,7 @@
         tableCreate("users","users/findAll",["id", "fullName", "username", "password", "email", "createdTime", "role"],[o + "id", o + "fullName", o + "username", o + "password", o + "email", "timeDiffString(" + o + "createdAt)", o+"role"]);
         tableCreate("categories","categories/findAll",["id", "name", "slug", "description","link"],[o + "id", o + "name", o + "slug", o + "description", `"<a href='../category?slug="+` + o + `slug+"'>link</a>"`]);
         tableCreate("posts","posts/findAll",["id", "title", "excerpt","status","userId","createdAt","updateAt","publishAt","views","categoryName","link"],[o + "id", o + "title", o + "excerpt", o + "status",o+"userId", "timeDiffString(" + o + "createdAt)", "timeDiffString(" + o + "updateAt)", "timeDiffString(" + o + "publishAt)",o+"views",o+"categoryName", `"<a href='../post?slug="+` + o + `slug+"'>link</a>"`]);
-        tableCreate("tags","tags/findAll",["id", "name", "postId","link"],[o + "id", o + "name", o + "postId",`"<a href='../tag?slug="+` + o + `slug+"'>link</a>"`]);
+        tableCreate("tags","tags/findAll",["id", "name", "postId","link","buttons"],[o + "id", o + "name", o + "postId",`"<a href='../tag?slug="+` + o + `slug+"'>link</a>"`,`"<div class='buttons'><button class='button-null' onclick='setTag("+`+o+"id"+`+");'>*</button><button class='button-false' onclick='deleteTag("+`+o+"id"+`+");'>-</button></div>"`]);
         function tableCreate(table,address,td,th) {
             fetch("http://localhost:8083/"+address)
                 .then(res => res.json())
@@ -45,7 +45,35 @@
                 t="";
             }
             fetch("http://localhost:8083/comments/setApproved?commentId="+commentId+t)
-            .then(a=>{document.getElementById("c").style.display="inline";});
+            //.then(a=>{/*document.getElementById("c").style.display="inline";*//*location.reload();});
+        }
+        function tagAdd()
+        {
+            fetch("http://localhost:8083/tags/add")
+        }
+        function setTag(id)
+        {
+            var name=prompt("name");
+            var slug=prompt("slug");
+            var postId=prompt("postId");
+            if(name==null)
+            {
+                name=document.getElementsByClassName("id"+id+"colname")[0].innerHTML;
+            }
+            if(slug==null)
+            {
+                slug=document.getElementsByClassName("id"+id+"colslug")[0].innerHTML;
+            }
+            if(postId==null)
+            {
+                postId=document.getElementsByClassName("id"+id+"colpostId")[0].innerHTML;
+            }
+            fetch("http://localhost:8083/tags/update?id="+id+"&name="+name+"&slug="+slug+"&postId="+postId);
+        }
+        function deleteTag(id)
+        {
+            fetch("http://localhost:8083/tags/delete?id="+id)
+            //.then(a=>{location.reload();})
         }
     </script>
 </body>

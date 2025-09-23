@@ -11,4 +11,8 @@ public interface TagService {
     List<TagDto> findAllByPostId(String slug);
     List<Tag> findAllBySlug(String slug);
     List<TagAdmin> findAll();
+    void delete(int id);
+    void add();
+    void update(Tag tag,int postId);
+    Tag findById(int id);
 }

@@ -52,4 +52,29 @@ public class TagServiceImpl implements TagService{
         }
         return tagAdmins;
     }
+    @Override
+    public void delete(int id)
+    {
+        tagRepository.deleteById(id);
+    }
+    @Override
+    public void add()
+    {
+        Tag tag=new Tag();
+        tag.setName("تگ");
+        tag.setSlug("tag");
+        tag.setPost(postRepository.findAll().get(0));
+        tagRepository.save(tag);
+    }
+    @Override
+    public void update(Tag tag,int postId)
+    {
+        tag.setPost(postRepository.findById(postId).get());
+        tagRepository.save(tag);
+    }
+    @Override
+    public Tag findById(int id)
+    {
+        return tagRepository.findById(id);
+    }
 }
