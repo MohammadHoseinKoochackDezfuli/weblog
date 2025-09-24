@@ -12,17 +12,15 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     List<Post> findTop10ByOrderByCreatedAtDesc();
 
-    long count();
-
     List<Post> findTop4ByOrderByViewsDesc();
 
     List<Post> findTop10ByOrderByViewsDesc();
-
-    Optional<Post> findBySlug(String slug);
 
     List<Post> findTop10ByCategoryId(int id);
 
     List<Post> findByTitleContaining(String keyword);
 
-    List<Post> findAll();
+    Optional<Post> findBySlug(String slug);
+
+    long count();
 }

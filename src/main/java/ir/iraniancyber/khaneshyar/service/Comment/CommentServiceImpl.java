@@ -52,6 +52,6 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Optional<Comment> findAllById(int id)
     {
-        return commentRepository.findAllById(id);
+        return commentRepository.findById(id);
     }
 }
