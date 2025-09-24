@@ -12,7 +12,7 @@
     <table id="categories"></table>
     <h2>user</h2>
     <table id="users"></table>
-    <h2>post</h2>
+    <h2>post</h2><button class="button-true" onclick="postAdd();">+</button>
     <table id="posts"></table>
     <h2>tag</h2><button class="button-true" onclick="tagAdd();">+</button>
     <table id="tags"></table>
@@ -23,7 +23,7 @@
         tableCreate("comments","comments/findAll",["id", "content", "authorName", "authorEmail", "approved","approvedSetter", "createdTime", "postLink"],[o + "id", o + "content", o + "authorName", o + "authorEmail",`"<span class='comment-"+` + o + `approved+"'>"+`+o+`approved+"</span>"`,`"<div class='buttons'><button class='button-null' onclick='setApproved(null,"+`+o+"id"+`+");'>null</button><button class='button-true' onclick='setApproved(true,"+`+o+"id"+`+");'>true</button><button class='button-false' onclick='setApproved(false,"+`+o+"id"+`+");'>false</button></div>"`, "timeDiffString(" + o + "createdAt)", `"<a href='../post?slug="+` + o + `postSlug+"'>link</a>"`]);
         tableCreate("users","users/findAll",["id", "fullName", "username", "password", "email", "createdTime", "role"],[o + "id", o + "fullName", o + "username", o + "password", o + "email", "timeDiffString(" + o + "createdAt)", o+"role"]);
         tableCreate("categories","categories/findAll",["id", "name", "slug", "description","link"],[o + "id", o + "name", o + "slug", o + "description", `"<a href='../category?slug="+` + o + `slug+"'>link</a>"`]);
-        tableCreate("posts","posts/findAll",["id", "title", "excerpt","status","userId","createdAt","updateAt","publishAt","views","categoryName","link"],[o + "id", o + "title", o + "excerpt", o + "status",o+"userId", "timeDiffString(" + o + "createdAt)", "timeDiffString(" + o + "updateAt)", "timeDiffString(" + o + "publishAt)",o+"views",o+"categoryName", `"<a href='../post?slug="+` + o + `slug+"'>link</a>"`]);
+        tableCreate("posts","posts/findAll",["id", "title", "excerpt","status","userId","createdAt","updateAt","publishAt","views","categoryName","link","buutons"],[o + "id", o + "title", o + "excerpt", o + "status",o+"userId", "timeDiffString(" + o + "createdAt)", "timeDiffString(" + o + "updateAt)", "timeDiffString(" + o + "publishAt)",o+"views",o+"categoryName", `"<a href='../post?slug="+` + o + `slug+"'>link</a>"`,`"<div class='buttons'><button class='button-null' onclick='setPost("+`+o+"id"+`+");'>*</button><button class='button-false' onclick='deletePost("+`+o+"id"+`+");'>-</button></div>"`]);
         tableCreate("tags","tags/findAll",["id", "name", "postId","link","buttons"],[o + "id", o + "name", o + "postId",`"<a href='../tag?slug="+` + o + `slug+"'>link</a>"`,`"<div class='buttons'><button class='button-null' onclick='setTag("+`+o+"id"+`+");'>*</button><button class='button-false' onclick='deleteTag("+`+o+"id"+`+");'>-</button></div>"`]);
         function tableCreate(table,address,td,th) {
             fetch("http://localhost:8083/"+address)
@@ -53,7 +53,18 @@
         function deleteTag(id)
         {
             fetch("http://localhost:8083/tags/delete?id="+id)
-            //.then(a=>{location.reload();})
+        }
+        function postAdd()
+        {
+            fetch("http://localhost:8083/posts/add")
+        }
+        function setPost(id)
+        {
+            location.replace("/updatePost?id="+id);
+        }
+        function deletePost(id)
+        {
+            fetch("http://localhost:8083/posts/delete?id="+id)
         }
     </script>
 </body>

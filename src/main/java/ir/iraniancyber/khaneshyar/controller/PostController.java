@@ -2,9 +2,13 @@ package ir.iraniancyber.khaneshyar.controller;
 
 import ir.iraniancyber.khaneshyar.dto.PostAdmin;
 import ir.iraniancyber.khaneshyar.model.Post;
+import ir.iraniancyber.khaneshyar.model.Tag;
 import ir.iraniancyber.khaneshyar.service.post.PostService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,5 +66,29 @@ public class PostController {
     public List<PostAdmin> findAll()
     {
         return postService.findAll();
+    }
+    @GetMapping("/delete")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public void delete(@RequestParam int id)
+    {
+        postService.delete(id);
+    }
+    @GetMapping("/add")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public void add(HttpServletRequest request)
+    {
+        postService.add(request);
+    }
+    @GetMapping("/update")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public void update(@RequestParam int id,@RequestParam String title,@RequestParam String excerpt,@RequestParam String slug,@RequestParam int categoryId,@RequestParam String content)
+    {
+        Post post=postService.findById(id).get();
+        post.setUpdateAt(LocalDateTime.now());
+        post.setTitle(title);
+        post.setSlug(slug);
+        post.setContent(content);
+        post.setExcerpt(excerpt);
+        postService.update(post,categoryId);
     }
 }

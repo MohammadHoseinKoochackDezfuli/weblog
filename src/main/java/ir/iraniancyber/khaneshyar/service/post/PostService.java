@@ -2,6 +2,7 @@ package ir.iraniancyber.khaneshyar.service.post;
 
 import ir.iraniancyber.khaneshyar.dto.PostAdmin;
 import ir.iraniancyber.khaneshyar.model.Post;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,4 +25,13 @@ public interface PostService {
     List<Post> findByTitleContaining(String search);
 
     List<PostAdmin> findAll();
+
+    void delete(int id);
+
+    void add(HttpServletRequest request);
+
+    Optional<Post> findById(int id);
+
+    void update(Post post,int categoryId);
+
 }
