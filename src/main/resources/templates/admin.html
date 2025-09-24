@@ -6,11 +6,6 @@
     <link rel="stylesheet" href="/tableStyle.css">
 </head>
 <body>
-    <center id="c" style="display: none;position: fixed">
-        <div style="width: 200px;padding: 10px;margin: 30px;border-radius: 5px;background-color: #0079ff;color: white">مrefresh page<button onclick="location.reload();">R</button></div>
-    </center>
-    <h1>admin page</h1>
-    <p>Welcome to admin page.</p>
     <h2>comment</h2>
     <table id="comments"></table>
     <h2>category</h2>
@@ -53,22 +48,7 @@
         }
         function setTag(id)
         {
-            var name=prompt("name");
-            var slug=prompt("slug");
-            var postId=prompt("postId");
-            if(name==null)
-            {
-                name=document.getElementsByClassName("id"+id+"colname")[0].innerHTML;
-            }
-            if(slug==null)
-            {
-                slug=document.getElementsByClassName("id"+id+"colslug")[0].innerHTML;
-            }
-            if(postId==null)
-            {
-                postId=document.getElementsByClassName("id"+id+"colpostId")[0].innerHTML;
-            }
-            fetch("http://localhost:8083/tags/update?id="+id+"&name="+name+"&slug="+slug+"&postId="+postId);
+            location.replace("/updateTag?id="+id);
         }
         function deleteTag(id)
         {

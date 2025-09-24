@@ -50,12 +50,6 @@ public class PageController {
         return "register";
     }
 
-    @GetMapping("/showExamQuestion")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String ShowExamQuestion() {
-        return "showExamQuestion";
-    }
-
     @GetMapping("/theNewestTests")
     public String theNewestTests() {
         return "theNewestTests";
@@ -75,4 +69,8 @@ public class PageController {
     public String startExam() {
         return "startExam";
     }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @GetMapping("/updateTag")
+    public String updateTag(){return "updateTag";}
 }
