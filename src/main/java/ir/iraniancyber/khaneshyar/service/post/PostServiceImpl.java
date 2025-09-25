@@ -2,14 +2,11 @@ package ir.iraniancyber.khaneshyar.service.post;
 
 import ir.iraniancyber.khaneshyar.dto.PostAdmin;
 import ir.iraniancyber.khaneshyar.model.Post;
-import ir.iraniancyber.khaneshyar.model.User;
-import ir.iraniancyber.khaneshyar.repository.CategoryRepository;
-import ir.iraniancyber.khaneshyar.repository.PostRepository;
-import ir.iraniancyber.khaneshyar.repository.UserRepository;
-import ir.iraniancyber.khaneshyar.service.category.CategoryService;
+import ir.iraniancyber.khaneshyar.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,15 +18,20 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final TagRepository tagRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
-    public PostServiceImpl(UserRepository userRepository,PostRepository postRepository, CategoryRepository categoryRepository) {
+    public PostServiceImpl(CommentRepository commentRepository,TagRepository tagRepository,UserRepository userRepository,PostRepository postRepository, CategoryRepository categoryRepository) {
         this.postRepository = postRepository;
         this.categoryRepository = categoryRepository;
         this.userRepository=userRepository;
+        this.tagRepository=tagRepository;
+        this.commentRepository=commentRepository;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Post> findTop4ByOrderByCreatedAtDesc() {
         return postRepository.findTop4ByOrderByCreatedAtDesc();
     }
@@ -55,8 +57,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Optional<Post> findBySlug(String slug) {
-        return postRepository.findBySlug(slug);
+    public Post findBySlug(String slug) {
+
+        Post post=postRepository.findBySlug(slug).get();
+        post.setViews(post.getViews()+1);
+        postRepository.save(post);
+        return post;
     }
 
     @Override
@@ -82,8 +88,11 @@ public class PostServiceImpl implements PostService {
         return postAdmins;
     }
     @Override
+    @Transactional
     public void delete(int id)
     {
+        commentRepository.deleteAllByPost_Id(id);
+        tagRepository.deleteAllByPost_Id(id);
         postRepository.deleteById(id);
     }
     @Override
@@ -98,6 +107,7 @@ public class PostServiceImpl implements PostService {
         post.setExcerpt("توضیحات وبلاگ");
         post.setPublishAt(LocalDateTime.now());
         post.setTitle("عنوان");
+        postRepository.save(post);
     }
     @Override
     public Optional<Post> findById(int id)

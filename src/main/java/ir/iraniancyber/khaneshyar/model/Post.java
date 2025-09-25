@@ -45,6 +45,8 @@ public class Post {
         this.slug = slug;
     }
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     public String getContent() {
         return content;
     }

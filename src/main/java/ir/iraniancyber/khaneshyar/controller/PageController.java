@@ -73,4 +73,8 @@ public class PageController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping("/updateTag")
     public String updateTag(){return "updateTag";}
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @GetMapping("/updatePost")
+    public String updatePost(){return "updatePost";}
 }

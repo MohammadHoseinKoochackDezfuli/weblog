@@ -29,7 +29,7 @@ public class PostController {
     }
 
     @GetMapping("/findBySlug")
-    public Optional<Post> findBySlug(@RequestParam String slug) {
+    public Post findBySlug(@RequestParam String slug) {
         return postService.findBySlug(slug);
     }
 
@@ -79,9 +79,9 @@ public class PostController {
     {
         postService.add(request);
     }
-    @GetMapping("/update")
+    @PostMapping("/update")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public void update(@RequestParam int id,@RequestParam String title,@RequestParam String excerpt,@RequestParam String slug,@RequestParam int categoryId,@RequestParam String content)
+    public void update(@RequestParam int id,@RequestParam String title,@RequestParam String excerpt,@RequestParam String slug,@RequestParam int categoryId,@RequestBody String content)
     {
         Post post=postService.findById(id).get();
         post.setUpdateAt(LocalDateTime.now());
@@ -89,6 +89,7 @@ public class PostController {
         post.setSlug(slug);
         post.setContent(content);
         post.setExcerpt(excerpt);
+        post.setUpdateAt(LocalDateTime.now());
         postService.update(post,categoryId);
     }
 }

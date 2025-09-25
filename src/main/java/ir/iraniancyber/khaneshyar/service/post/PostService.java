@@ -20,7 +20,7 @@ public interface PostService {
 
     List<Post> findTop10ByCategoryId(String slug);
 
-    Optional<Post> findBySlug(String slug);
+    Post findBySlug(String slug);
 
     List<Post> findByTitleContaining(String search);
 

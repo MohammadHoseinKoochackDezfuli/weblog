@@ -14,10 +14,26 @@ function text(list)
 }
 function SET()
 {
-    var f="http://localhost:8083/tags/update?id="+id;
+    var content="";
+    var f="http://localhost:8083/"+document.getElementById("h").innerHTML+"/update?id="+id;
     for(var i=0;i<l.length;i++)
     {
-        f+="&"+l[i]+"="+document.getElementById("i"+i).value;
+        if(l[i]=="content")
+        {
+            content=document.getElementById("i" + i).value;
+        }
+        else {
+            f += "&" + l[i] + "=" + document.getElementById("i" + i).value;
+        }
     }
-    fetch(f);
+    const data={
+      content:content
+    };
+    fetch(f, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
 }

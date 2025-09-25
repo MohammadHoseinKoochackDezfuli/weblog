@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment,Integer> {
     List<Comment> findAllByPostIdAndApproved(int id,Boolean approved);
+    void deleteAllByPost_Id(int id);
 }
