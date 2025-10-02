@@ -85,4 +85,10 @@ public class PageController {
     public String updatePost() {
         return "updatePost";
     }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @GetMapping("/updateCategory")
+    public String updateCategory() {
+        return "updateCategory";
+    }
 }

@@ -8,7 +8,7 @@
 <body>
     <h2>comment</h2>
     <table id="comments"></table>
-    <h2>category</h2>
+    <h2>category</h2><button class="button-true" onclick="categoryAdd();">+</button>
     <table id="categories"></table>
     <h2>user</h2>
     <table id="users"></table>
@@ -22,7 +22,7 @@
         var o = "res[y].";
         tableCreate("comments","comments/findAll",["id", "content", "authorName", "authorEmail", "approved","approvedSetter", "createdTime", "postLink"],[o + "id", o + "content", o + "authorName", o + "authorEmail",`"<span class='comment-"+` + o + `approved+"'>"+`+o+`approved+"</span>"`,`"<div class='buttons'><button class='button-null' onclick='setApproved(null,"+`+o+"id"+`+");'>null</button><button class='button-true' onclick='setApproved(true,"+`+o+"id"+`+");'>true</button><button class='button-false' onclick='setApproved(false,"+`+o+"id"+`+");'>false</button></div>"`, "timeDiffString(" + o + "createdAt)", `"<a href='../post?slug="+` + o + `postSlug+"'>link</a>"`]);
         tableCreate("users","users/findAll",["id", "fullName", "username", "password", "email", "createdTime", "role"],[o + "id", o + "fullName", o + "username", o + "password", o + "email", "timeDiffString(" + o + "createdAt)", o+"role"]);
-        tableCreate("categories","categories/findAll",["id", "name", "slug", "description","link"],[o + "id", o + "name", o + "slug", o + "description", `"<a href='../category?slug="+` + o + `slug+"'>link</a>"`]);
+        tableCreate("categories","categories/findAll",["id", "name", "slug", "description","link","buttons"],[o + "id", o + "name", o + "slug", o + "description", `"<a href='../category?slug="+` + o + `slug+"'>link</a>"`,`"<div class='buttons'><button class='button-null' onclick='setCategory("+`+o+"id"+`+");'>*</button><button class='button-false' onclick='deleteCategory("+`+o+"id"+`+");'>-</button></div>"`]);
         tableCreate("posts","posts/findAll",["id", "title", "excerpt","status","userId","createdAt","updateAt","publishAt","views","categoryId","link","buutons"],[o + "id", o + "title", o + "excerpt", o + "status",o+"userId", "timeDiffString(" + o + "createdAt)", "timeDiffString(" + o + "updateAt)", "timeDiffString(" + o + "publishAt)",o+"views",o+"categoryId", `"<a href='../post?slug="+` + o + `slug+"'>link</a>"`,`"<div class='buttons'><button class='button-null' onclick='setPost("+`+o+"id"+`+");'>*</button><button class='button-false' onclick='deletePost("+`+o+"id"+`+");'>-</button></div>"`]);
         tableCreate("tags","tags/findAll",["id", "name", "postId","link","buttons"],[o + "id", o + "name", o + "postId",`"<a href='../tag?slug="+` + o + `slug+"'>link</a>"`,`"<div class='buttons'><button class='button-null' onclick='setTag("+`+o+"id"+`+");'>*</button><button class='button-false' onclick='deleteTag("+`+o+"id"+`+");'>-</button></div>"`]);
         function tableCreate(table,address,td,th) {
@@ -40,7 +40,6 @@
                 t="";
             }
             fetch("http://localhost:8083/comments/setApproved?commentId="+commentId+t)
-            //.then(a=>{/*document.getElementById("c").style.display="inline";*//*location.reload();});
         }
         function tagAdd()
         {
@@ -65,6 +64,18 @@
         function deletePost(id)
         {
             fetch("http://localhost:8083/posts/delete?id="+id)
+        }
+        function categoryAdd()
+        {
+            fetch("http://localhost:8083/categories/add")
+        }
+        function setCategory(id)
+        {
+            location.replace("/updateCategory?id="+id);
+        }
+        function deleteCategory(id)
+        {
+            fetch("http://localhost:8083/categories/delete?id="+id)
         }
     </script>
 </body>

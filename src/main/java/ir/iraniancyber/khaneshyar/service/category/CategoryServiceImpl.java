@@ -16,4 +16,28 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> findAll() {
         return categoryRepository.findAll();
     }
+    @Override
+    public void add()
+    {
+        Category category=new Category();
+        category.setName("کتگوری");
+        category.setSlug("category");
+        category.setDescription("توضیحات کتگوری");
+        categoryRepository.save(category);
+    }
+    @Override
+    public void delete(int id)
+    {
+        categoryRepository.deleteById(id);
+    }
+    @Override
+    public void update(Category category)
+    {
+        categoryRepository.save(category);
+    }
+    @Override
+    public Category findCategoryById(int id)
+    {
+        return categoryRepository.findById(id).get();
+    }
 }
