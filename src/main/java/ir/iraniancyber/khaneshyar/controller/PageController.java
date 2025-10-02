@@ -27,9 +27,13 @@ public class PageController {
     public String category() {
         return "category";
     }
+
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping("/admin")
-    public String admin(){return "admin";}
+    public String admin() {
+        return "admin";
+    }
+
     @GetMapping("/post")
     public String showExam() {
         return "post";
@@ -72,9 +76,13 @@ public class PageController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping("/updateTag")
-    public String updateTag(){return "updateTag";}
+    public String updateTag() {
+        return "updateTag";
+    }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping("/updatePost")
-    public String updatePost(){return "updatePost";}
+    public String updatePost() {
+        return "updatePost";
+    }
 }

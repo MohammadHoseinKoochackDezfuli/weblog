@@ -2,7 +2,6 @@ package ir.iraniancyber.khaneshyar.repository;
 
 import ir.iraniancyber.khaneshyar.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;

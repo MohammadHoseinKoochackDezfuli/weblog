@@ -1,9 +1,9 @@
 package ir.iraniancyber.khaneshyar.service.tag;
 
-import ir.iraniancyber.khaneshyar.dto.TagAdmin;
-import ir.iraniancyber.khaneshyar.dto.TagDto;
+import ir.iraniancyber.khaneshyar.dto.tag.TagAdmin;
+import ir.iraniancyber.khaneshyar.dto.tag.TagDto;
+import ir.iraniancyber.khaneshyar.dto.tag.TagSaveAndGet;
 import ir.iraniancyber.khaneshyar.model.Tag;
-import org.springframework.core.metrics.StartupStep;
 
 import java.util.List;
 
@@ -15,4 +15,5 @@ public interface TagService {
     void add();
     void update(Tag tag,int postId);
     Tag findById(int id);
+    TagSaveAndGet findTagAdminById(int id);
 }

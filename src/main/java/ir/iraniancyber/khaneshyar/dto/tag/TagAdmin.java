@@ -1,4 +1,4 @@
-package ir.iraniancyber.khaneshyar.dto;
+package ir.iraniancyber.khaneshyar.dto.tag;
 
 public class TagAdmin {
     private int id;

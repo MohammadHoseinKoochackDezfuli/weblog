@@ -1,6 +1,7 @@
 package ir.iraniancyber.khaneshyar.service.post;
 
-import ir.iraniancyber.khaneshyar.dto.PostAdmin;
+import ir.iraniancyber.khaneshyar.dto.post.PostAdmin;
+import ir.iraniancyber.khaneshyar.dto.post.PostSaveAndGet;
 import ir.iraniancyber.khaneshyar.model.Post;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -34,4 +35,5 @@ public interface PostService {
 
     void update(Post post,int categoryId);
 
+    PostSaveAndGet findAdminById(int id);
 }

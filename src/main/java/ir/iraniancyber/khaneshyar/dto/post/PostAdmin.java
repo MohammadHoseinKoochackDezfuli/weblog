@@ -1,8 +1,6 @@
-package ir.iraniancyber.khaneshyar.dto;
+package ir.iraniancyber.khaneshyar.dto.post;
 
-import ir.iraniancyber.khaneshyar.model.Category;
 import ir.iraniancyber.khaneshyar.model.Status;
-import ir.iraniancyber.khaneshyar.model.User;
 
 import java.time.LocalDateTime;
 
@@ -17,9 +15,9 @@ public class PostAdmin {
     private final LocalDateTime updateAt;
     private final LocalDateTime publishAt;
     private final int views;
-    private final String categoryName;
+    private final int categoryId;
 
-    public PostAdmin(int id, String title, String slug, String excerpt, Status status, int userId, LocalDateTime createdAt, LocalDateTime updateAt, LocalDateTime publishAt, int views, String categoryName) {
+    public PostAdmin(int id, String title, String slug, String excerpt, Status status, int userId, LocalDateTime createdAt, LocalDateTime updateAt, LocalDateTime publishAt, int views, int categoryId) {
         this.id = id;
         this.title = title;
         this.slug = slug;
@@ -30,7 +28,7 @@ public class PostAdmin {
         this.updateAt = updateAt;
         this.publishAt = publishAt;
         this.views = views;
-        this.categoryName = categoryName;
+        this.categoryId = categoryId;
     }
 
     public int getId() {
@@ -73,7 +71,7 @@ public class PostAdmin {
         return views;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public int getCategoryId() {
+        return categoryId;
     }
 }

@@ -1,10 +1,6 @@
 package ir.iraniancyber.khaneshyar.dto;
 
-import ir.iraniancyber.khaneshyar.model.Role;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDateTime;
 
 public class UserDto {
 
@@ -13,7 +9,7 @@ public class UserDto {
     private final String username;
     private final String email;
 
-    public UserDto( String fullName, String password, String username, String email) {
+    public UserDto(String fullName, String password, String username, String email) {
         this.fullName = fullName;
         this.password = password;
         this.username = username;

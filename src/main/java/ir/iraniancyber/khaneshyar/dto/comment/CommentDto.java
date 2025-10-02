@@ -1,4 +1,4 @@
-package ir.iraniancyber.khaneshyar.dto;
+package ir.iraniancyber.khaneshyar.dto.comment;
 
 import java.time.LocalDateTime;
 

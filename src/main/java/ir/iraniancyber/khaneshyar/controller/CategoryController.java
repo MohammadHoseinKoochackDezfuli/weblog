@@ -2,7 +2,6 @@ package ir.iraniancyber.khaneshyar.controller;
 
 import ir.iraniancyber.khaneshyar.model.Category;
 import ir.iraniancyber.khaneshyar.service.category.CategoryService;
-import ir.iraniancyber.khaneshyar.service.post.PostService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

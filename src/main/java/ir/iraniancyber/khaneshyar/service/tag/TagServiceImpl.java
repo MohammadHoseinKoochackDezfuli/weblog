@@ -1,9 +1,9 @@
 package ir.iraniancyber.khaneshyar.service.tag;
 
-import ir.iraniancyber.khaneshyar.dto.TagAdmin;
-import ir.iraniancyber.khaneshyar.dto.TagDto;
+import ir.iraniancyber.khaneshyar.dto.tag.TagAdmin;
+import ir.iraniancyber.khaneshyar.dto.tag.TagDto;
+import ir.iraniancyber.khaneshyar.dto.tag.TagSaveAndGet;
 import ir.iraniancyber.khaneshyar.model.Tag;
-import ir.iraniancyber.khaneshyar.repository.CategoryRepository;
 import ir.iraniancyber.khaneshyar.repository.PostRepository;
 import ir.iraniancyber.khaneshyar.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +76,11 @@ public class TagServiceImpl implements TagService{
     public Tag findById(int id)
     {
         return tagRepository.findById(id).get();
+    }
+    @Override
+    public TagSaveAndGet findTagAdminById(int id)
+    {
+        Tag tag=tagRepository.findById(id).get();
+        return new TagSaveAndGet(tag.getId(),tag.getName(),tag.getSlug(),tag.getPost().getId());
     }
 }

@@ -1,8 +1,8 @@
 package ir.iraniancyber.khaneshyar.controller;
 
-import ir.iraniancyber.khaneshyar.dto.PostAdmin;
+import ir.iraniancyber.khaneshyar.dto.post.PostAdmin;
+import ir.iraniancyber.khaneshyar.dto.post.PostSaveAndGet;
 import ir.iraniancyber.khaneshyar.model.Post;
-import ir.iraniancyber.khaneshyar.model.Tag;
 import ir.iraniancyber.khaneshyar.service.post.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/posts")
@@ -62,34 +61,40 @@ public class PostController {
     public List<Post> findByTitleContaining(@RequestParam String search) {
         return postService.findByTitleContaining(search);
     }
+
     @GetMapping("findAll")
-    public List<PostAdmin> findAll()
-    {
+    public List<PostAdmin> findAll() {
         return postService.findAll();
     }
+
     @GetMapping("/delete")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public void delete(@RequestParam int id)
-    {
+    public void delete(@RequestParam int id) {
         postService.delete(id);
     }
+
     @GetMapping("/add")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public void add(HttpServletRequest request)
-    {
+    public void add(HttpServletRequest request) {
         postService.add(request);
     }
+
     @PostMapping("/update")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public void update(@RequestParam int id,@RequestParam String title,@RequestParam String excerpt,@RequestParam String slug,@RequestParam int categoryId,@RequestBody String content)
-    {
-        Post post=postService.findById(id).get();
+    public void update(@RequestBody PostSaveAndGet data) {
+        Post post = postService.findById(data.getId()).get();
         post.setUpdateAt(LocalDateTime.now());
-        post.setTitle(title);
-        post.setSlug(slug);
-        post.setContent(content);
-        post.setExcerpt(excerpt);
+        post.setTitle(data.getTitle());
+        post.setSlug(data.getSlug());
+        post.setContent(data.getContent());
+        post.setExcerpt(data.getExcerpt());
         post.setUpdateAt(LocalDateTime.now());
-        postService.update(post,categoryId);
+        postService.update(post, data.getCategoryId());
     }
+
+    @GetMapping("/findAdminById")
+    public PostSaveAndGet findAdminById(@RequestParam int id) {
+        return postService.findAdminById(id);
+    }
+
 }

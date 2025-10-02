@@ -1,6 +1,7 @@
 package ir.iraniancyber.khaneshyar.service.post;
 
-import ir.iraniancyber.khaneshyar.dto.PostAdmin;
+import ir.iraniancyber.khaneshyar.dto.post.PostAdmin;
+import ir.iraniancyber.khaneshyar.dto.post.PostSaveAndGet;
 import ir.iraniancyber.khaneshyar.model.Post;
 import ir.iraniancyber.khaneshyar.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -83,7 +84,7 @@ public class PostServiceImpl implements PostService {
         for(int i=0;i<list.size();i++)
         {
             Post post=list.get(i);
-            postAdmins.add(new PostAdmin(post.getId(),post.getTitle(),post.getSlug(),post.getExcerpt(),post.getStatus(),post.getAuthor().getId(),post.getCreatedAt(),post.getUpdateAt(),post.getPublishAt(),post.getViews(),post.getCategory().getName()));
+            postAdmins.add(new PostAdmin(post.getId(),post.getTitle(),post.getSlug(),post.getExcerpt(),post.getStatus(),post.getAuthor().getId(),post.getCreatedAt(),post.getUpdateAt(),post.getPublishAt(),post.getViews(),post.getCategory().getId()));
         }
         return postAdmins;
     }
@@ -119,5 +120,11 @@ public class PostServiceImpl implements PostService {
     {
         post.setCategory(categoryRepository.findById(categoryId).get());
         postRepository.save(post);
+    }
+    @Override
+    public PostSaveAndGet findAdminById(int id)
+    {
+        Post post=postRepository.findById(id).get();
+        return new PostSaveAndGet(post.getId(),post.getTitle(),post.getSlug(),post.getExcerpt(),post.getContent(),post.getCategory().getId());
     }
 }

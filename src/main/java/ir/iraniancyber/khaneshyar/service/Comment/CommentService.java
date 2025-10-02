@@ -1,7 +1,7 @@
 package ir.iraniancyber.khaneshyar.service.Comment;
 
-import ir.iraniancyber.khaneshyar.dto.CommentAdmin;
-import ir.iraniancyber.khaneshyar.dto.CommentDto;
+import ir.iraniancyber.khaneshyar.dto.comment.CommentAdmin;
+import ir.iraniancyber.khaneshyar.dto.comment.CommentDto;
 import ir.iraniancyber.khaneshyar.model.Comment;
 
 import java.util.List;

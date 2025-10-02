@@ -1,8 +1,7 @@
 package ir.iraniancyber.khaneshyar.controller;
 
-import ir.iraniancyber.khaneshyar.dto.CommentAdmin;
-import ir.iraniancyber.khaneshyar.dto.CommentDto;
-import ir.iraniancyber.khaneshyar.dto.CommentRequest;
+import ir.iraniancyber.khaneshyar.dto.comment.CommentAdmin;
+import ir.iraniancyber.khaneshyar.dto.comment.CommentDto;
 import ir.iraniancyber.khaneshyar.model.Comment;
 import ir.iraniancyber.khaneshyar.model.Post;
 import ir.iraniancyber.khaneshyar.model.User;
@@ -10,11 +9,8 @@ import ir.iraniancyber.khaneshyar.repository.PostRepository;
 import ir.iraniancyber.khaneshyar.repository.UserRepository;
 import ir.iraniancyber.khaneshyar.service.Comment.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,7 +53,7 @@ public class CommentController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping("/setApproved")
     public void setApproved(@RequestParam int commentId, @RequestParam(required = false) Boolean approved) {
-        Comment comment=commentService.findAllById(commentId).get();
+        Comment comment = commentService.findAllById(commentId).get();
         comment.setApproved(approved);
         commentService.save(comment);
     }

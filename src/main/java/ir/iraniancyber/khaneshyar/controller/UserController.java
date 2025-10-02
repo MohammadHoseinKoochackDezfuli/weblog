@@ -1,6 +1,5 @@
 package ir.iraniancyber.khaneshyar.controller;
 
-import ir.iraniancyber.khaneshyar.dto.CommentAdmin;
 import ir.iraniancyber.khaneshyar.dto.UserDto;
 import ir.iraniancyber.khaneshyar.model.Role;
 import ir.iraniancyber.khaneshyar.model.User;
@@ -31,8 +30,8 @@ public class UserController {
     private final CustomUserDetailService customUserDetailService;
     private final AuthenticationManager authenticationManager;
 
-    public UserController(UserRepository userRepository,PasswordEncoder passwordEncoder, CustomUserDetailService customUserDetailService, AuthenticationManager authenticationManager) {
-        this.userRepository=userRepository;
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomUserDetailService customUserDetailService, AuthenticationManager authenticationManager) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.customUserDetailService = customUserDetailService;
         this.authenticationManager = authenticationManager;
@@ -70,8 +69,7 @@ public class UserController {
 
     @GetMapping("/findAll")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public List<User> findAll()
-    {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 }
